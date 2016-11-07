@@ -1,30 +1,30 @@
-# Dependency Injection
+# Injeção de Dependências
 -----------------------------------
 
-## Core Abstractions
+## Principais abstrações
 
-The library is built on top of the following core abstractions: `Injector`, `Binding`, and `Dependency`.
+A biblioteca é construida sobre as seguintes abistrações: `Injetor`, `Vínculo` e `Dependência`.
 
- * An injector is created from a set of bindings.
- * An injector resolves dependencies and creates objects.
- * A binding maps a token, such as a string or class, to a factory function and a list of dependencies. So a binding defines how to create an object.
- * A dependency points to a token and contains extra information on how the object corresponding to that token should be injected.
+ * Um injetor é criado de um conjunto de vínculos.
+ * Um injeto resolve dependências e cria objetos.
+ * Um vínculo mapeia um token, como uma string ou classe, a uma função de fábrica e uma lista de dependências. Então um vínculo define como é criado um objeto.
+ * Uma dependência aponta para um token e contém informações extra em como um objeto correspondente a aquele token deve ser injetado.
 
 ```
-[Injector]
+[Injetor]
     |
     |
     |*
-[Binding]
+[Vínculo]
    |----------|-----------------|
    |          |                 |*
-[Token]    [FactoryFn]     [Dependency]
+[Token]    [Função de Fábrica] [Dependência]
                                |---------|
                                |         |
                             [Token]   [Flags]
 ```
 
-## Example
+## Exemplo
 
 ``` javascript
 class Engine {
@@ -42,40 +42,36 @@ var inj = Injector.resolveAndCreate([
 var car = inj.get(Car);
 ```
 
-In this example we create two bindings: one for Car and one for Engine. `@Inject(Engine)` declares a dependency on Engine.
+Neste exemplo criamos dois vínculos: um para Car e outro para Engine. `@Inject(Engine)` declara uma dependência em Engine.
 
+## Injetor
 
-
-## Injector
-
-An injector instantiates objects lazily, only when asked for, and then caches them.
+Um injetor instancia objetos preguiçosamente, somente quando for chamado, e então faz cache dele.
 
 Compare
 
 ``` javascript
-var car = inj.get(Car); //instantiates both an Engine and a Car
+var car = inj.get(Car); //instancia ambos Car e Engine
 ```
 
-with
+com
 
 ``` javascript
-var engine = inj.get(Engine); //instantiates an Engine
-var car = inj.get(Car); //instantiates a Car (reuses Engine)
+var engine = inj.get(Engine); //Instancia Engine
+var car = inj.get(Car); //Instancia um Car (reusa Engine)
 ```
 
-and with
+e com
 
 ``` javascript
-var car = inj.get(Car); //instantiates both an Engine and a Car
-var engine = inj.get(Engine); //reads the Engine from the cache
+var car = inj.get(Car); //instancia ambos Engine e Car
+var engine = inj.get(Engine); //lê Engine do cache
 ```
+Para evitar bugs, tenha certeza que os objetos registrados tenham construtores livres de efeitos colaterais. Neste caso, um injetor atua como um hashmap, onde a ordem com o que os objetos são criado não importa.
 
-To avoid bugs make sure the registered objects have side-effect-free constructors. In this case, an injector acts like a hash map, where the order in which the objects got created does not matter.
+## Injetores filhos e Dependências
 
-
-## Child Injectors and Dependencies
-
-Injectors are hierarchical.
+Injetores são hierárquicos.
 
 ``` js
 var parent = Injector.resolveAndCreate([
@@ -83,20 +79,18 @@ var parent = Injector.resolveAndCreate([
 ]);
 var child = parent.resolveAndCreateChild([Car]);
 
-var car = child.get(Car); // uses the Car binding from the child injector and Engine from the parent injector.
+var car = child.get(Car); // usa o vínculo de Car do Injetor filho e Engine do injetor pai.
 ```
-
-Injectors form a tree.
+Injetores formam uma árvore.
 
 ```
-  GrandParentInjector
+      InjectorAvô
    /              \
-Parent1Injector  Parent2Injector
+InjectorPai1  InjectorPai2
   |
-ChildInjector
+InjetorFilho1
 ```
-
-The dependency resolution algorithm works as follows:
+O algoritmo de injeção de dependência funciona como segue abaixo:
 
 ``` js
 // this is pseudocode.
@@ -111,7 +105,7 @@ while (inj) {
 throw new NoProviderError(requestedKey);
 ```
 
-So in the following example
+Então no exemplo seguinte:
 
 ``` js
 class Car {
@@ -119,11 +113,11 @@ class Car {
 }
 ```
 
-DI will start resolving `Engine` in the same injector where the `Car` binding is defined. It will check whether that injector has the `Engine` binding. If it is the case, it will return that instance. If not, the injector will ask its parent whether it has an instance of `Engine`. The process continues until either an instance of `Engine` has been found, or we have reached the root of the injector tree.
+Injetor de Dependências começa resolvendo `Engine` com o mesmo injetor que o vínculo `Car` está definido. Irá checar caso aquele injetor tem vínculo com `Engine`. Se este for o caso, irá retornar a instância. Se não, o injetor irá perguntar ao pai caso tenha uma instância de `Engine`. O processo continua até encontrar uma instância de `Engine`, ou atingirmos a raiz da árvore de injetores.
 
-### Constraints
+### Restrições
 
-You can put upper and lower bound constraints on a dependency. For instance, the `@Self` decorator tells DI to look for `Engine` only in the same injector where `Car` is defined. So it will not walk up the tree.
+Você pode colocar restrições superior e inferior a uma dependência. Por exemplo, o decorador `@Self` diz ao Injetor de Dependência para procurar por `Engine` somente no mesmo injetor onde `Car` foi definido. Então não irá passar por toda a árvore.
 
 ``` js
 class Car {
@@ -131,9 +125,9 @@ class Car {
 }
 ```
 
-A more realistic example is having two bindings that have to be provided together (e.g., NgModel and NgRequiredValidator.)
+Um exemplo mais realista é tendo dois vínculoas que tem de ser providos juntos(Ex.: NgModel e NgRequiredValidator.)
 
-The `@Host` decorator tells DI to look for `Engine` in this injector, its parent, until it reaches a host (see the section on hosts.)
+O decorador `@Host` diz ao Injetor para procurar `Engine` em seu injetor, partente, até alcançar seu hospedeiro(host)(ver próxima seção sobre hospedeiros.)
 
 ``` js
 class Car {
@@ -141,7 +135,7 @@ class Car {
 }
 ```
 
-The `@SkipSelf` decorator tells DI to look for `Engine` in the whole tree starting from the parent injector.
+O decorador `@SkipSelf` diz ao Injetor para procurar por `Engine` em toda a árvore começando pelo pai do injetor.
 
 ``` js
 class Car {
@@ -149,10 +143,9 @@ class Car {
 }
 ```
 
-#### DI Does Not Walk Down
+#### Injetor de Dependências não navega para baixo
 
-
-Dependency resolution only walks up the tree. The following will throw because DI will look for an instance of `Engine` starting from `parent`.
+A resolução de dependências somente navega para cima sua árvore. O exemplo a seguir irá lançar exceção pois o Injetor irá procurar uma instância de `Engine` começando do `pai`.
 
 ``` js
 var parent = Injector.resolveAndCreate([Car]);
@@ -160,13 +153,13 @@ var child = parent.resolveAndCreateChild([
   bind(Engine).toClass(TurboEngine)
 ]);
 
-parent.get(Car); // will throw NoProviderError
+parent.get(Car); // irá lançar NoProviderError
 ```
 
 
-## Bindings
+## Vínculos
 
-You can bind to a class, a value, or a factory. It is also possible to alias existing bindings.
+Você mpode vincular uma classe, um valor, ou uma fábrica. É possível criar alias para vínculos existentes.
 
 ``` js
 var inj = Injector.resolveAndCreate([
@@ -175,7 +168,7 @@ var inj = Injector.resolveAndCreate([
 ]);
 
 var inj = Injector.resolveAndCreate([
-  Car,  // syntax sugar for bind(Car).toClass(Car)
+  Car,  // açucar sintático para bind(Car).toClass(Car)
   Engine
 ]);
 
@@ -189,7 +182,7 @@ var inj = Injector.resolveAndCreate([
 ]);
 ```
 
-You can bind any token.
+Você pode vincular qualquer token.
 
 ``` js
 var inj = Injector.resolveAndCreate([
@@ -197,8 +190,7 @@ var inj = Injector.resolveAndCreate([
   bind("engine!").toClass(Engine)
 ]);
 ```
-
-If you want to alias an existing binding, you can do so using `toAlias`:
+Se quiser criar um alias para um vínculo existente, você pode usar `toAlias`:
 
 ``` js
 var inj = Injector.resolveAndCreate([
@@ -206,28 +198,27 @@ var inj = Injector.resolveAndCreate([
   bind("engine!").toAlias(Engine)
 ]);
 ```
-which implies `inj.get(Engine) === inj.get("engine!")`.
+O que implica em `inj.get(Engine) === inj.get("engine!")`.
 
-Note that tokens and factory functions are decoupled.
+Note quew tokens e fábricas são desacoplados.
 
 ``` js
 bind("some token").toFactory(someFactory);
 ```
+A função `someFactory` não tem que saber quem cria um objeto `some token`.
 
-The `someFactory` function does not have to know that it creates an object for `some token`.
+### Resolvendo vínculos
 
-### Resolved Bindings
+Quando o Injetor recebe `bind(Car).toClass(Car)`, precisa fazer algumas coisas antes de criar uma instância de `Car`:
 
-When DI receives `bind(Car).toClass(Car)`, it needs to do a few things before it can create an instance of `Car`:
+- Precisa refletir sobre `Car` para criar uma função de fábrica.
+- Precisa normalizar as dependências (Ex., calcular os limites alto e baixo)
 
-- It needs to reflect on `Car` to create a factory function.
-- It needs to normalize the dependencies (e.g., calculate lower and upper bounds).
+O resultado destas duas operações é um `ResolvedBinding`.
 
-The result of these two operations is a `ResolvedBinding`.
+As funções  `resolveAndCreate` e `resolveAndCreateChild` resolve os vínculos antes de criar um injetor. Mas você pode criar resoluções de vínculos manualmente através de `Injector.resolve([bind(Car).toClass(Car)])`. Criando um injetor de um injetor pré resolvido é muito mais performático, e poderá ser necessário para áreas que sejam sensíveis a performance.
 
-The `resolveAndCreate` and `resolveAndCreateChild` functions resolve passed-in bindings before creating an injector. But you can resolve bindings yourself using `Injector.resolve([bind(Car).toClass(Car)])`. Creating an injector from pre-resolved bindings is faster, and may be needed for performance sensitive areas.
-
-You can create an injector using a list of resolved bindings.
+Você pode criar um injetor usando uma lista de vínculos resolvidos.
 
 ``` js
 var listOfResolvingBindings = Injector.resolve([Binding1, Binding2]);
@@ -236,24 +227,23 @@ inj.createChildFromResolvedBindings(listOfResolvedBindings);
 ```
 
 
-### Transient Dependencies
+### Dependências TRansientes
 
-An injector has only one instance created by each registered binding.
+Um injetor tem apenas uma instância criada para cada vínculo registrado.
 
 ``` js
 inj.get(MyClass) === inj.get(MyClass); //always holds
 ```
 
-If we need a transient dependency, something that we want a new instance of every single time, we have two options.
+Se precisarmos de dependências transientes, alguma coisa que queremos uma nova instância a cada vez temos duas opções.
 
-We can create a child injector for each new instance:
+Podemos criar um injetor filho para cada nova instância:
 
 ``` js
 var child = inj.resolveAndCreateChild([MyClass]);
 child.get(MyClass);
 ```
-
-Or we can register a factory function:
+Ou podemos registror uma função de fábrica:
 
 ``` js
 var inj = Injector.resolveAndCreate([

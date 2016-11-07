@@ -1,86 +1,87 @@
-# Annotations
+# Anotações
 --------------
-## Directives
-Directives allow you to attach behavior to elements in the DOM.
+## Diretivas
+Diretivas permitem que se adicione comportamento a elementos no DOM.
 
-Directives are classes which get instantiated as a response to a particular DOM structure. By controlling the DOM structure, what directives are imported, and their selectors, the developer can use the [composition pattern](http://en.wikipedia.org/wiki/Object_composition) to get a desirable application behavior.
+Diretivas são classes que são instanciadas em resposta a uma estrutura particular DOM. Pelo controle da estrutura DOM, quais diretivas são importadas e seus seletores, o desenvolvedor pode usar o [padrão Composição](https://pt.wikipedia.org/wiki/Composi%C3%A7%C3%A3o_de_objetos) para ter o desejado comportamente na aplicação.
 
-Directives are the cornerstone of an Angular application. We use Directives to break complex problems into smaller more reusable components. Directives allow the developer to turn HTML into a DSL and then control the application assembly process.
+Diretivas são o pilar de uma aplicação em Angular. Nós usamos Diretivas para quebrar problemas complexos em menoes para componentes mais reutilizáveis. Diretivas permitem ao desenvolvedor torna HTML em uma DSL e então controlar o processo de montagem de aplicação.
 
-A directive consists of a single directive annotation and a controller class. When the directive's `selector` matches elements in the DOM, the following steps occur:
+Uma diretiva consiste de uma anotação de diretiva e uma classe controladora(controller). Quando o `seletor` da diretiva casa com elements no DOM, os seguintes passos ocorrem:
 
-* For each directive, the *ElementInjector* attempts to resolve the directive's constructor arguments.
-* Angular instantiates directives for each matched element using *ElementInjector* in a depth-first order, as declared in the HTML.
+* Para cada diretiva, o *ElementInjector* (Injetor de Elementos) tenta resolver os argumentos do construtor da diretiva.
+* Angular instancia diretivas a cada elemento encontrado usando o *ElementInjector* em uma busca de ordem em profundidade, como declarado no HTML
 
-Here is a trivial example of a tooltip decorator. The directive will log a tooltip into the console on every time mouse enters a region:
+Aqui há um exemplo trivial de um decorador de um tooltip. A diretiva irá logar no console toda vez que um mouse passar na região de um tooltip:
 
 ``` javascript
 @Directive({
-  selector: '[tooltip]',     | CSS Selector which triggers the decorator
-  inputs: [                  | List which properties need to be bound
-    'text: tooltip'          |  - DOM element tooltip property should be
-  ],                         |    mapped to the directive text property.
-  host: {                    | List which events need to be mapped.
-    '(mouseover)': 'show()'    |  - Invoke the show() method every time
-  }                          |    the mouseover event is fired.
+  selector: '[tooltip]',     | O seletor CSS que dispara o decorador
+  inputs: [                  | Lista quais propriedades precisam ser vinculados
+    'text: tooltip'          |  - A propriedade do elemento DOM deve ser
+  ],                         |    mapeado para propriedade de texto da diretiva.
+  host: {                    | Lista quais eventos precisam ser mapeados
+    '(mouseover)': 'show()'  |  - Invoca o método show() toda vez que
+  }                          |    o evento mouseover (mouse sobre) é disparado.
 })                           |
-class Form {                 | Directive controller class, instantiated
-                             | when CSS matches.
-  text:string;               | text property on the Directive Controller.
+class Form {                 | Classe controladore de diretiva é instanciada,
+                             | quando CSS é encontrado.
+  text:string;               | propriedade de texto no Controller da Diretiva.
                              |
-  show(event) {              | Show method which implements the show action.
+  show(event) {              | Método show() que implementa a ação de exibir no console.
     console.log(this.text);  |
   }
 }
 ```
 
-Example of usage:
+Exemplo de uso:
 
 ``` html
-<span tooltip="Tooltip text goes here.">Some text here.</span>
+<span tooltip="Texto do vai aqui Tooltip.">Algum texto aqui.</span>
 ```
+O desenvolvedor de uma aplicação agora pode usar livremente o atributo `tooltip` em qualquer lugar que este comportamento for necessário.
+O código acima ensina o navegador um novo reutilizável e declarativo comportamento.
 
-The developer of an application can now freely use the `tooltip` attribute wherever the behavior is needed. The code above has taught the browser a new reusable and declarative behavior.
-
-Notice that data binding will work with this decorator with no further effort as shown below.
+Note que  o vínculo dos dados irá funcionar com este decorador sem mais nenhum esforço com é mostrado abaixo.
 
 ``` html
-<span tooltip="Greetings {{user}}!">Some text here.</span>
+<span tooltip="Olá {{usuario}}!">Algum texto aqui.</span>
 ```
 
-**NOTE:** Angular applications do not have a main method. Instead they have a root Component. Dependency Injection then assembles the directives into a working Angular application.
+**NOTA:** Aplicações em Angular não tem método main. Invés disso eles tem um Componente raiz. A Injeção de Dependência monta as dependências para formar uma aplicação angular funcional.
 
-## Components
-A component is a directive which uses shadow DOM to create encapsulate visual behavior. Components are typically used to create UI widgets or to break up the application into smaller components.
+## Componentes
+Um componente é uma diretiva o qual usa shadow DOM para criar comportamentos visuais encapsulados. Componentes são tipicamente usados para criar elementos visuais ou partir a aplicação em componentes menores.
 
 * Only one component can be present per DOM element.
-* Component's CSS selectors usually trigger on element names. (Best practice)
-* Component has its own shadow view which is attached to the element as a Shadow DOM.
-* Shadow view context is the component instance. (i.e. template expressions are evaluated against the component instance.)
+* Apenas um componente pode está presente por elemento DOM.
+* Seletores de componentes CSS comumente são disparados pelo nome de seu elemento. (Boas práticas)
+* Componentes tem seu próprio shadow view o qual é adicionado ao elemento como um Shadow DOM.
+* Contextro de Shadow View é a inst?ância de um componente. (Ex.: expressões de templates são avaliados contra a instancia do componente.)
 
-Each Angular component requires a single `@Component` and at least one `@View` annotation. The `@Component` annotation specifies when a component is instantiated, and which properties and hostListeners it binds to.
+Cada componente Angular requer uma única anotação `@Component` ou pelo menos uma `@View`. A anotação `@Component` especifica quando um componente é instanciado, e quais propriedades e hostListeners ele está vinculado.
 
-When a component is instantiated, Angular
+Quando um componente é instanciado, Angular
 
-* Creates a shadow DOM for the component.
-* Loads the selected template into the shadow DOM.
-* Creates a child Injector which is configured with the appInjector for the Component.
+* Cria uma shadow DOM para o componente.
+* Carrega o template selecionado na shadow DOM.
+* Cria um Injetor filho o qual está configurado com o appInjector para o componente.
 
-Example of a component:
+Exemplo de um Componente:
 
 ``` javascript
-@Component({                      | Component annotation
-  selector: 'pane',               | CSS selector on <pane> element
-  inputs: [                   | List which property need to be bound
-    'title',                      |  - title mapped to component title
-    'open'                        |  - open attribute mapped to component open property
+@Component({                      | Anotação de Componente
+  selector: 'pane',               | Seletor CSS sobre o elemento <pane>
+  inputs: [                       | Lista qual propriedade precisa ser vinculada
+    'title',                      |  - atributo title mapeado para a propriedade title do componente
+    'open'                        |  - atributo open mapeado para a proriedade open do componente
   ],                              |
 })                                |
-@View({                           | View annotation
-  templateUrl: 'pane.html'        |  - URL of template HTML
+@View({                           | Annotation Anotação de View
+  templateUrl: 'pane.html'        |  - URL do template em HTML
 })                                |
-class Pane {                      | Component controller class
-  title:string;                   |  - title property
+class Pane {                      | Classe controladora de Componente
+  title:string;                   |  - propriedade title
   open:boolean;
 
   constructor() {
@@ -89,7 +90,7 @@ class Pane {                      | Component controller class
   }
 
   // Public API
-  toggle() => this.open = !this.open;
+  toggle() => this.open = !this.open; 
   open() => this.open = true;
   close() => this.open = false;
 }
