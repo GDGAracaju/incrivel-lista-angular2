@@ -17,9 +17,9 @@ Este é um projeto em construção, contribua com traduções, conteúdo própri
 
   <br/>
   <br/>
-  ```
-  This is a curated list of Brazilian Portuguese resources about Angular 2, mantained by members of @GDGAracaju and voluntees. For original english content, please visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)
-  ```
+  
+  `This is a curated list of Brazilian Portuguese resources about Angular 2, mantained by members of @GDGAracaju and voluntees. For original english content, please visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)`
+  
 </p>
 
 Tabela de conteúdo:
