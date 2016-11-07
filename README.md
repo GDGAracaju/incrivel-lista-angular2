@@ -8,7 +8,9 @@
 ##### Versões de browsers suportadas por Angular 2:
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/angular2-ci.svg)](https://saucelabs.com/u/angular2-ci)
 
-```Este é um projeto em construção, contribua com traduções, conteúdo próprio entre outros. Toda ajuda é bem-vinda!```
+```
+Este é um projeto em construção, contribua com traduções, conteúdo próprio entre outros. Toda ajuda é bem-vinda!
+```
 
 <p align="center">
   Lista abaixo é somente conteúdo em português mantido por membros do @GDGAracaju e voluntários. Para a lista original com conteúdo em inglês por favor visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)
