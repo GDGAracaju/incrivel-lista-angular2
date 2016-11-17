@@ -2,12 +2,12 @@
 -----------------------------------
 
 ![Detecção de mudanças](http://36.media.tumblr.com/70d4551eef20b55b195c3232bf3d4e1b/tumblr_njb2puhhEa1qc0howo2_1280.png)
-Todo componente tem um detector de mudanças responsável por checar os vínculos definidos em seu template. Exemplos de vínculos: `{{todo.text}}` e `[todo]="t"`. Detectores de mudança propagas vínculoas[c] da raiz para as folhas em uma busca em profundidade.
+Todo componente tem um detector de mudanças responsável por checar os vínculos definidos em seu template. Exemplos de vínculos: `{{todo.text}}` e `[todo]="t"`. Detectores de mudança propaga vínculoas[c] da raiz para as folhas em uma busca em profundidade.
 
-Por padrão a detcção de mudança ocorre por todo nó da árvore para verificar o que foi mudado, e o que fazer a cada evento do navegador. Embora isto pareca terrivelmente ineficiente, o sistema de detecção de mudanças do Angular 2 pode percorrer milhares de checagens simples (números são dependentes da plataforma) em poucos millisegundos.
+Por padrão a detecção de mudança ocorre por todo nó da árvore para verificar o que foi mudado, e o que fazer a cada evento do navegador. Embora isto pareca terrivelmente ineficiente, o sistema de detecção de mudanças do Angular 2 pode percorrer milhares de checagens simples (números são dependentes da plataforma) em poucos millisegundos.
 
 ## Objetos imutáveis
-Se um componente depender somente de seus vínculos, e seus vínculos são imutáveis, então o componente pode mudare somente mudar se um de seus vínculos mudar. Portanto, podemos cortar a detecção de mudança nas subarvores de um componente até que um evento ocorra. Quando isto acontece, podemos checar a subárvore apenas uma única vezm e então disabilitar até a próxima mudança (caixas em cinza indicam os detectores desabilitados)
+Se um componente depender somente de seus vínculos, e seus vínculos são imutáveis, então o componente pode mudar, e somente mudar, se um de seus vínculos mudar. Portanto, podemos cortar a detecção de mudança nas subárvores de um componente até que um evento ocorra. Quando isto acontece, podemos checar a subárvore apenas uma única vez, e então, disabilitar até a próxima mudança (caixas em cinza indicam os detectores desabilitados)
 ![CD - Objetos imutáveis](http://40.media.tumblr.com/0f43874fd6b8967f777ac9384122b589/tumblr_njb2puhhEa1qc0howo4_1280.png)
 
 Para implementar isto basta configurar a estratégia de detecção de mudança para `ON_PUSH`
@@ -20,10 +20,9 @@ class ImmutableTodoCmp {
 ```
 
 ## Objetos Observáveis
-Se o componente depende apenas de seus vínculos, e os vínculos são observáveis, então este componente pode mudar se e somente se um de seus vínculos emitir um evento. Portanto, podemos cortar a detecção de mudanças na subárvore do componente até que um evento ocorra. Quando isto acontece, podemos checar a subárvore apenas uma única vez, e então desabilitá-la até a próxima mudança.
+Se o componente depende apenas de seus vínculos, e os vínculos são observáveis, então este componente pode mudar se, e somente se, um de seus vínculos emitir um evento. Portanto, podemos cortar a detecção de mudanças na subárvore do componente até que um evento ocorra. Quando isto acontece, podemos checar a subárvore apenas uma única vez, e então desabilitá-la até a próxima mudança.
 
 **NOTA:** Se você tem uma árvore de componentes com vínculos imutáveis, uma mudança tem que passar por todos os componentes desde a raiz. Este não é o caso quando tratamos com observáveis
-**NOTE:** If you have a tree of components with immutable bindings, a change has to go through all the components starting from the root. This is not the case when dealing with observables.
 
 ``` javascript
 type ObservableTodo = Observable<Todo>;
@@ -71,4 +70,4 @@ Assumindo que as mudanças ocorrem raramente e os componentes formam uma árvore
 - O sistema de detecção propaga dos vínculos da raiz as folhas.
 - Diferente do Angular 1.X, o Grafo de detecção de mudanças é uma árvore direcionada. Como resultado, o sistema é mais performático e previsível.
 - Por padrão, o sistema de detecção de mudanças percorre toda a árvore. Mas se você usa objetos imutáveis ou observáveis, você pode tomar a vantagem deles e apenas checar partes da árvore que "realmente mudam".
-- Estas otimizações copõe e não quebram as garantias que o detector de mudanças provê.
+- Estas otimizações compõe e não quebram as garantias que o detector de mudanças provê.

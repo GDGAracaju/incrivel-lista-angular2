@@ -6,7 +6,7 @@
 A biblioteca é construida sobre as seguintes abistrações: `Injetor`, `Vínculo` e `Dependência`.
 
  * Um injetor é criado de um conjunto de vínculos.
- * Um injeto resolve dependências e cria objetos.
+ * Um injetor resolve dependências e cria objetos.
  * Um vínculo mapeia um token, como uma string ou classe, a uma função de fábrica e uma lista de dependências. Então um vínculo define como é criado um objeto.
  * Uma dependência aponta para um token e contém informações extra em como um objeto correspondente a aquele token deve ser injetado.
 
@@ -18,7 +18,7 @@ A biblioteca é construida sobre as seguintes abistrações: `Injetor`, `Víncul
 [Vínculo]
    |----------|-----------------|
    |          |                 |*
-[Token]    [Função de Fábrica] [Dependência]
+[Token][Função de Fábrica] [Dependência]
                                |---------|
                                |         |
                             [Token]   [Flags]
@@ -46,7 +46,7 @@ Neste exemplo criamos dois vínculos: um para Car e outro para Engine. `@Inject(
 
 ## Injetor
 
-Um injetor instancia objetos preguiçosamente, somente quando for chamado, e então faz cache dele.
+Um injetor instancia objetos preguiçosamente(ou lazy load), somente quando for chamado, e então faz cache dele.
 
 Compare
 

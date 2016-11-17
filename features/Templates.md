@@ -1,169 +1,144 @@
 # Templates
 -----------------------------------
-Templates are markup which is added to HTML to declaratively describe how the application model should be
-projected to DOM as well as which DOM events should invoke which methods on the controller. Templates contain
-syntaxes which are core to Angular and allows for data-binding, event-binding, template-instantiation.
+Templetes são marcações o qual é adicionado ao HTML para declarativamente descrever como o modelo de aplicação deve ser projetada para o DOM como também como eventos DOM podem invocar quais métodos no controller. Templates contém sintaxe o qual são o núcleo para o Angular e permite vínculo-de-dados (data-binding), vínculo-de-eventos (event-binding) e, instanciação de templates. 
 
-The design of the template syntax has these properties:
+O design da sintaxe de templates tem estas propriedades:
 
+* Todas as expressões de vínculo-de-dados são facilmente identificáveis. (Ex.: nunca há ambiguidades seja se o valor possa ser interpretado como uma string literal ou como uma expressão).
+* Todos os eventos e suas declarações são fácilmente identificáveis.
+* Todos os locais de instanciação de DOM são facilmente identificáveis.
+* Todas os lugares de declaração de variáveis são facilmente identificáveis.
 
-* All data-binding expressions are easily identifiable. (i.e. there is never an ambiguity whether the value should be
-  interpreted as string literal or as an expression.)
-* All events and their statements are easily identifiable.
-* All places of DOM instantiation are easily identifiable.
-* All places of variable declaration are easily identifiable.
+As propriedades acima garantem que os templates são facilmente analisados por ferramentas (como IDEs) e raciocinado pelas pessoas.
+Em nenhum ponto é necessário entender qual diretivas estão ativas ou qual semânticas são a fim de raciocinar sobre as características de tempo de execução do template. 
 
-The above properties guarantee that the templates are easy to parse by tools (such as IDEs) and reason about by people.
-At no point is it necessary to understand which directives are active or what their semantics are in order to reason
-about the template runtime characteristics.
+## Vínculos de Propriedades
 
-## Property bindings
+Vincular dados de modelo de aplicação para a Interface de Usuário é o tipo mais comum de vínculoas em uma aplicação Angular. Os vínculos são sempre na forma de `nome-da-propriedade` o qual é atribuida uma `expressão`. A forma genérica é: 
 
-Binding application model data to the UI is the most common kind of bindings in an Angular application. The bindings
-are always in the form of `property-name` which is assigned an `expression`. The generic form is:
+**Forma curta:** `<algum-elemento [alguma-propriedade]="expressao">`
 
-**Short form:** `<some-element [some-property]="expression">`
+**Forma canônica:** `<algum-elemento bind-alguma-propriedade="expressao">`
 
-**Canonical form:** `<some-element bind-some-property="expression">`
+Onde:
+* `algum-elemento`pode ser um elemento DOM existente.
+* `alguma-propriedade` (escapado por `[]` ou `bind-`) é o nome da propridade em `algum-elemento`. Neste caso o caixa de traço (dash-case) é convetido em camel-case `algumaPropriedade`.
+* `expressao` é uma expressão válida (como vai ser definido na seção abaixo). 
 
-Where:
-* `some-element` can be any existing DOM element.
-* `some-property` (escaped with `[]` or `bind-`) is the name of the property on `some-element`. In this case the
-  dash-case is converted into camel-case `someProperty`.
-* `expression` is a valid expression (as defined in section below).
-
-Example:
+Examplo:
 ``` html
 <div [title]="user.firstName">
 ```
 
-In the above example the `title` property of the `div` element will be updated whenever the `user.firstName` changes
-its value.
+No exemplo acima a propriedade `title` do elemento `div` será atualizado toda vez que o `user.firstName`mudar seu valor. 
 
-Key points:
-* The binding is to the element property not the element attribute.
-* To prevent custom element from accidentally reading the literal `expression` on the title element, the attribute name
-  is escaped. In our case the `title` is escaped to `[title]` through the addition of square brackets `[]`.
-* A binding value (in this case `user.firstName`) will always be an expression, never a string literal.
+Pontos chave:
 
-**NOTE:** Angular 2 binds to properties of elements rather than attributes of elements. This is
-done to better support custom elements, and to allow binding for values other than strings.
+* O vínculo é a propriedade do elemento e não o atributo do elemento.
+* Para previnir que elementos customizados possam ser lidos como uma `expressão`literal sobre o elemento title, o nome do atributo é escapado. Neste caso o `title` é escapado para `[title]`através da adição de colchetes `[]`.
+* Um valor de um vínculo (neste caso `user.firstName`) irá sempre ser uma expressão, nunca uma string literal.
 
-**NOTE:** Some editors/server side pre-processors may have trouble generating `[]` around the attribute name. For this
-reason Angular also supports a canonical version which is prefixed using `bind-`.
+**NOTA:** Angular 2 vincula propriedades de elementos ao invés de atributos de elementos. Isto é feito para melhor dar suporte a elementos customizados. e permitir vínculos para outros valores além de string.
 
-## Binding Events
+**NOTA:** Alguns editores/pre-processadores do lado de servidores podem ter problemas para gerar `[]` em torno dos nome de atributos. Por esta razão Angular também suporta a versão canônica que é prefizando `bind-`. 
 
-Binding events allows wiring events from DOM (or other components) to the Angular controller.
+## Vinculando Eventos
 
-**Short form:** `<some-element (some-event)="statement">`
+Vincular eventos permite ligar eventos vindo do DOM (ou outros components) para o controller Angular.
 
-**Canonical form:** `<some-element on-some-event="statement">`
+**Forma curta:** `algum-elemento (algum-evento)="declaração">`
 
-Where:
-* `some-element` Any element which can generate DOM events (or has an angular directive which generates the event).
-* `some-event` (escaped with `()` or `on-`) is the name of the event `some-event`. In this case the
-  dash-case is converted into camel-case `someEvent`.
-* `statement` is a valid statement (as defined in section below).
-If the execution of the statement returns `false`, then `preventDefault`is applied on the DOM event.
+**Forma Canônica:** `algum-elemento on-algum-evento="decaração">`
 
-Angular listens to bubbled DOM events (as in the case of clicking on any child), as shown below:
+Onde: 
 
-**Short form:** `<some-element (some-event)="statement">`
+* `algum-elemento` Algum elemento o qual pode gerar eventos  DOM (ou tem uma diretiva Angular que gera o evento).
+* `algum-evento` (escapado com `()` ou `on-`) é o nome do evento `algum-evento`. Neste caso o dash-case é convertido para `algumEvento` em camelcase.  
+* `declação`é uma declaração válida (como definida na seção abaixo).
 
-**Canonical form:** `<some-element on-some-event="statement">`
+Se a execução de uma declaração retornar `false`, então `preventDefault` é aplicado ao evento DOM. 
 
-Example:
+Angular escuta por eventos DOM disparados (como no caso de clicar em qualquer filho), como mostrado abaixo:
+
+**Forma curta:** `<algum-elemento (algum-evento)="declaração">`
+
+**Forma canônica:** `<algum-elemento on-algum-evento="declaração">`
+
+Examplos:
 ``` js
 @Component(...)
 class Example {
   submit() {
-    // do something when button is clicked
+    // Fazer algo quando o botão é clicado
   }
 }
 
-<button (click)="submit()">Submit</button>
+<button (click)="submit()">Submeter</button>
 ```
 
-In the above example, when clicking on the submit button angular will invoke the `submit` method on the surrounding
-component's controller.
+No exemplo acima, quando clica-se no botão de submeter angular irá chamar o método `submit` do controller em torno do componente.
 
+**NOTA:** Ao contrário do Angular v1, Angular 2 trata vínculos de evento como contrutores principais e não como diretivas. Isto significa que não há necessidade de criar uma diretiva de evento para cada tipo de evento. Isto permite ao Angular 2 de facilmente vincular eventos customizados de Elementos Customizados, cujo nomes de eventos não são conhecidos antecipadamente
 
-**NOTE:** Unlike Angular v1, Angular v2 treats event bindings as core constructs not as directives. This means that there
-is no need to create an event directive for each kind of event. This makes it possible for Angular v2 to easily
-bind to custom events of Custom Elements, whose event names are not known ahead of time.
+## Interpolação de Strings
 
-## String Interpolation
-
-Property bindings are the only data bindings which Angular supports, but for convenience Angular supports an interpolation
-syntax which is just a short hand for the data binding syntax.
+Vínculo de propriedades sãp apenas vínculos de dados o qual o angular dá suporte, mas, por conveniencia Angular suporta uma sintaxe de interpolação o qual é apenas um atalho para sintaxe de vínculo de dados.
 
 ``` html
-<span>Hello {{name}}!</span>
+<span>Olá {{name}}!</span>
 ```
 
-is a short hand for:
+é um atalho para:
 
 ``` html
-<span [text|0]=" 'Hello ' + stringify(name) + '!'">_</span>
+<span [text|0]=" 'Olá ' + stringify(name) + '!'">_</span>
 ```
 
-The above says to bind the `'Hello ' + stringify(name) + '!'` expression to the zero-th child of the `span`'s `text`
-property. The index is necessary in case there are more than one text nodes, or if the text node we wish to bind to
-is not the first one.
+O que quer dizer acima é vincular a expressão `'Olá ' + stringify(name) + '!'` para o zerésimo filho da propriedade `text` de `span`. O índice é necessário neste caso no caso de haver mais de um nó de text, ou ser o nó text que desejamos vincular não é o primeiro.
 
-Similarly the same rules apply to interpolation inside attributes.
+Similarmente as mesmas regras se aplicam a interpolação dentro de atributos.
 
 ``` html
-<span title="Hello {{name}}!"></span>
+<span title="Olá {{name}}!"></span>
 ```
 
-is a short hand for:
+é atalho para:
 
 ``` html
-<span [title]=" 'Hello ' + stringify(name) + '!'"></span>
+<span [title]=" 'Olá ' + stringify(name) + '!'"></span>
 ```
 
-**NOTE:** `stringify()` is a built in implicit function which converts its argument to a string representation, while
-keeping `null` and `undefined` as empty strings.
+**NOTA:** `stringify()` é uma função implicita o qual converte seus argumentos em sua representação em string, enquanto mantém `null` e `undefined` como string vazias.
 
-## Inline Templates
-Data binding allows updating the DOM's properties, but it does not allow for changing of the DOM structure. To change
-DOM structure we need the ability to define child templates, and then instantiate these templates into Views. The
-Views then can be inserted and removed as needed to change the DOM structure.
+## Templates em linha
 
-**Short form:**
+Vínculo de dados permitem atualizar propriedades do DOM, mas não permite para mudar a estrutura do DOM. Para mudar estruturas do DOM precisamos da habilidade de definir templates filhos em Views (Visões). As Views podem ser inseridas e removidas de acordo com a necessidade para mudar estruturas do DOM. 
+
+**Forma curta:**
 ``` html
-Hello {{user}}!
+Olá {{user}}!
 <div template="ng-if: isAdministrator">
-  ...administrator menu here...
+  ...menu do adminstrador aqui...
 </div>
 ```
 
-**Canonical form:**
+**Forma canônica**
 ``` html
-Hello {{user}}!
+Olá {{user}}!
 <template [ng-if]="isAdministrator">
   <div>
-    ...administrator menu here...
+    ...menu do administrador aqui...
   </div>
 </template>
 ```
 
-Where:
-* `template` defines a child template and designates the anchor where Views (instances of the template) will be
-  inserted. The template can be defined implicitly with `template` attribute, which turns the current element into
-  a template, or explicitly with `<template>` element. Explicit declaration is longer, but it allows for having
-  templates which have more than one root DOM node.
-* `viewport` is required for templates. The directive is responsible for deciding when
-  and in which order should child views be inserted into this location. Such a directive usually has one or
-  more bindings and can be represented as either `viewport-directive-bindings` or
-  `viewport-directive-microsyntax` on `template` element or attribute. See template microsyntax for more details.
+Onde:
+* `template`define um teplate filho e designa a âncira onde Viewa(instâncias do template) irão ser inseridas. O template pode ser difinido implicitamente com o atributo `template`, que torna o elemento corrente em um template, ou explicitamente com o elemento `<template>`. Declaração explicita é longa, mas permite templates com mais de uma raiz em um nó DOM. 
+* `viewport` é requerido para templates. A diretiva é responsável por decidir quando e em que ordem as views filhas serão inseridas em sua localização. Tal diretiva usualmente pode ter mais de um vínculo e pode ser representado tanto como `viewport-directive-bindinds` ou `viewport-directive-microsyntax` no elemento ou atributo do `template`. Veja microsintaxe de templates para mais detalhes.
 
-## Template Microsyntax
+## Microsintaxe de Template
 
-Often times it is necessary to encode a lot of different bindings into a template to control how the instantiation
-of the templates occurs. One such example is `ng-for`.
+Frequentemente é necessário codifica uma gama de diferentes vínculos em um template para controlar como a instanciação de template ocorre. Um exemplo é utilizando `ng-for`.
 
 ``` html
 <form #foo=form>
@@ -175,14 +150,13 @@ of the templates occurs. One such example is `ng-for`.
 </ul>
 ```
 
-Where:
-* `[ng-for]` triggers the for directive.
-* `#person` exports the implicit `ng-for` item.
-* `[ng-for-of]="people"` binds an iterable object to the `ng-for` controller.
-* `#i=index` exports item index as `i`.
+Onde:
+* `[ng-for]` dispara a diretiva for.
+* `#person` exporta o item implícito `ng-for`.
+* `[ng-for-of]="people"` vincula um objeto iterável para o controller `ng-for`.
+* `#i=index` exporta o índice de item como `i`.
 
-The above example is explicit but quite wordy. For this reason in most situations a short hand version of the
-syntax is preferable.
+O exemplo acima é explicito mas um tanto prolixo. Por esta razão na maioria dos casos a versão curta é a sintaxe mais preferida.
 
 ``` html
 <ul>
@@ -190,18 +164,14 @@ syntax is preferable.
 </ul>
 ```
 
-Notice how each key value pair is translated to a `key=value;` statement in the `template` attribute. This makes the
-repeat syntax a much shorter, but we can do better. Turns out that most punctuation is optional in the short version
-which allows us to further shorten the text.
+Note que cada par chave-valor é traduzido para uma declaração `key=value;` no atributo do `template`. Isto faz que a sintaxe repetitiva seja muito enxuta, mas podemos fazer melhor. Acaba que a maioria da pontuação é opcional na versão curta que permitem-nos encutar ainda mais o texto. 
 
 ``` html
 <ul>
   <li template="ng-for #person of people #i=index">{{i}}. {{person}}<li>
 </ul>
 ```
-
-We can also optionally use `var` instead of `#` and add `:` to `for` which creates the following recommended
-microsyntax for `ng-for`.
+Nós podemos usar `var` ao invés de `#` e adicionar `:` para `for` o qual cria o seguinte recomendável microsintaxe para `ng-for`.
 
 ``` html
 <ul>
@@ -209,7 +179,7 @@ microsyntax for `ng-for`.
 </ul>
 ```
 
-Finally, we can move the `ng-for` keyword to the left hand side and prefix it with `*` as so:
+Finalmente, podemos mover a palavra-chave `ng-for` para o lado esquerdo e prefixá-lo com `*`com abaixo:
 
 ``` html
 <ul>
@@ -217,32 +187,25 @@ Finally, we can move the `ng-for` keyword to the left hand side and prefix it wi
 </ul>
 ```
 
-
-The format is intentionally defined freely, so that developers of directives can build an expressive microsyntax for
-their directives. The following code describes a more formal definition.
+/o formato foi intencionalmente definido mais livremente, então os desenvolvedores de diretivas podem criar expressivas microsintaxes, para suas diretivas. O código seguinte descreve uma definição mais formal.
 
 ```
-expression: ...                     // as defined in Expressions section
-local: [a-zA-Z][a-zA-Z0-9]*         // exported variable name available for binding
-internal: [a-zA-Z][a-zA-Z0-9]*      // internal variable name which the directive exports.
-key: [a-z][-|_|a-z0-9]]*            // key which maps to attribute name
-keyExpression: key[:|=]?expression  // binding which maps an expression to a property
-varExport: [#|var]local(=internal)? // binding which exports a local variable from a directive
-microsyntax: ([[key|keyExpression|varExport][;|,]?)*
+expressão: ...                     // como definido na seção Expressões
+local: [a-zA-Z][a-zA-Z0-9]*         // nome variável exportada disponível para vínculos
+intena: [a-zA-Z][a-zA-Z0-9]*      // nome de variável interna o qual exporta diretivas.
+chave: [a-z][-|_|a-z0-9]]*            // chave o qual mapeia nomes de atributos
+expressões-chave: key[:|=]?expressão  // vínculos o qual mapeia expressões a propriedades
+exportarVar: [#|var]local(=internal)? // vínculo que exporta uma variável local de uma diretiva
+microssintaxe: ([[key|keyExpression|varExport][;|,]?)*
 ```
 
-Where
-* `expression` is an Angular expression as defined in section: Expressions.
-* `local` is a local identifier for local variables.
-* `internal` is an internal variable which the directive exports for binding.
-* `key` is an attribute name usually only used to trigger a specific directive.
-* `keyExpression` is an property name to which the expression will be bound to.
-* `varExport` allows exporting of directive internal state as variables for further binding. If no `internal` name
-  is specified, the exporting is to an implicit variable.
-* `microsyntax` allows you to build a simple microsyntax which can still clearly identify which expressions bind to
-  which properties as well as which variables are exported for binding.
+Onde
+* `expressão` é expressão Angular definido na seção: Expressões.
+* `local` é um identificador local para variáveis locais.
+* `interna` é uma variável interna o qual a diretiva é exportada para vínculos.
+* `chave` é um nome de um atributo usualmente usado para disparar uma diretiva específica.
+* `exressõesChave` é um nome de propriedade o qual a espeção será ligada.
+* `exportarVar` permite exportar o estada interno da diretiva como variáveis para vínculos mais a diante. Se não há nome especificado `interno`, a exportação é uma variável implícita.
+* `microsintaxe` permite a você construir microsintaxes simples o qual pode claramente identificar quais expreções está vonculadas a quais variáveis estão exportadas para vínculos.
 
-
-**NOTE:** the `template` attribute must be present to make it clear to the user that a sub-template is being created. This
-goes along with the philosophy that the developer should be able to reason about the template without understanding the
-semantics of the instantiator directive.
+**NOTA:** O `template`deve estar presente para fazer claro ao usuário que um sub-template está sendo criado. Isso vai contra a filosofia de que o desenvolvedor deve ser apto a pensar sobre o template sem entender as semânticas de um instanciador de diretivas.

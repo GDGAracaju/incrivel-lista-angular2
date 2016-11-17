@@ -5,7 +5,7 @@ Diretivas permitem que se adicione comportamento a elementos no DOM.
 
 Diretivas são classes que são instanciadas em resposta a uma estrutura particular DOM. Pelo controle da estrutura DOM, quais diretivas são importadas e seus seletores, o desenvolvedor pode usar o [padrão Composição](https://pt.wikipedia.org/wiki/Composi%C3%A7%C3%A3o_de_objetos) para ter o desejado comportamente na aplicação.
 
-Diretivas são o pilar de uma aplicação em Angular. Nós usamos Diretivas para quebrar problemas complexos em menoes para componentes mais reutilizáveis. Diretivas permitem ao desenvolvedor torna HTML em uma DSL e então controlar o processo de montagem de aplicação.
+Diretivas são o pilar de uma aplicação em Angular. Nós usamos Diretivas para quebrar problemas complexos em menores para componentes mais reutilizáveis. Diretivas permitem ao desenvolvedor torna HTML em uma [DSL(Linguagens específicas de Domínio)](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico) e então controlar o processo de montagem de aplicação.
 
 Uma diretiva consiste de uma anotação de diretiva e uma classe controladora(controller). Quando o `seletor` da diretiva casa com elements no DOM, os seguintes passos ocorrem:
 
@@ -37,29 +37,28 @@ class Form {                 | Classe controladore de diretiva é instanciada,
 Exemplo de uso:
 
 ``` html
-<span tooltip="Texto do vai aqui Tooltip.">Algum texto aqui.</span>
+<span tooltip="Texto do Tooltip.">Algum texto aqui.</span>
 ```
 O desenvolvedor de uma aplicação agora pode usar livremente o atributo `tooltip` em qualquer lugar que este comportamento for necessário.
-O código acima ensina o navegador um novo reutilizável e declarativo comportamento.
+O código acima ensina o navegador um novo comportamento reutilizável e declarativo.
 
-Note que  o vínculo dos dados irá funcionar com este decorador sem mais nenhum esforço com é mostrado abaixo.
+Note que o vínculo dos dados irá funcionar com este decorador sem mais nenhum esforço com é mostrado abaixo.
 
 ``` html
 <span tooltip="Olá {{usuario}}!">Algum texto aqui.</span>
 ```
 
-**NOTA:** Aplicações em Angular não tem método main. Invés disso eles tem um Componente raiz. A Injeção de Dependência monta as dependências para formar uma aplicação angular funcional.
+**NOTA:** Aplicações em Angular não tem método main. Ao invés disso eles tem um Componente raiz. A Injeção de Dependência monta as dependências para formar uma aplicação angular funcional.
 
 ## Componentes
 Um componente é uma diretiva o qual usa shadow DOM para criar comportamentos visuais encapsulados. Componentes são tipicamente usados para criar elementos visuais ou partir a aplicação em componentes menores.
 
-* Only one component can be present per DOM element.
 * Apenas um componente pode está presente por elemento DOM.
 * Seletores de componentes CSS comumente são disparados pelo nome de seu elemento. (Boas práticas)
 * Componentes tem seu próprio shadow view o qual é adicionado ao elemento como um Shadow DOM.
-* Contextro de Shadow View é a inst?ância de um componente. (Ex.: expressões de templates são avaliados contra a instancia do componente.)
+* Contextro de Shadow View é a instância de um componente. (Ex.: expressões de templates são avaliados contra a instância do componente.)
 
-Cada componente Angular requer uma única anotação `@Component` ou pelo menos uma `@View`. A anotação `@Component` especifica quando um componente é instanciado, e quais propriedades e hostListeners ele está vinculado.
+Cada componente Angular requer uma única anotação `@Component` ou pelo menos uma `@View`. A anotação `@Component` especifica quando um componente é instanciado e, quais propriedades e hostListeners ele está vinculado.
 
 Quando um componente é instanciado, Angular
 

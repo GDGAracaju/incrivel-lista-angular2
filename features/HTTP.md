@@ -1,11 +1,11 @@
 # HTTP
 -----------------------------------
 
-Http is available as an injectable class, with methods to perform http requests. Calling request returns an *EventEmitter* which will emit a single Response when a response is received.
+HTTP é disponibilizado como uma classe injetável, com métodos para executar requisições HTTP. Requisições chamadas retornam um *EventEmitter (Emissor de Evento)* o qual emitirar uma única *Response* quando uma resposta é recebida. 
 
-The `toRx()` method of *EventEmitter* needs to be called in order to get the RxJS Subject. *EventEmitter* does not provide combinators like map, and has different semantics for subscribing/observing.
+O método `toRx()`do *EventEmitter* precisa ser chamado para que se obtenha um objeto RxJS *Subject (Assunto)*. *EventEmitter* não provê combinadores como map, e tem difetentes semânticas para subscrição/observação(subscribing/observing).
 
-## Usage
+## Uso
 
 ``` TypeScript
 import {Http, HTTP_BINDINGS} from 'angular2/http';
@@ -15,12 +15,12 @@ import {Http, HTTP_BINDINGS} from 'angular2/http';
 class PeopleComponent {
   constructor(http: Http) {
     http.get('people.json')
-      //Get the RxJS Subject
+      // Obtém o objeto RxJS Subject
       .toRx()
-      // Call map on the response observable to get the parsed people object
+      // Chama o método map (mapeamento) sobre a resposta observável para obter o objeto people (pessoas) mapeamento
       .map(res => res.json())
-      // Subscribe to the observable to get the parsed people object and attach it to the
-      // component
+      // Subescreve-se para ser observável para obter o objeto people mapeado e anexá-lo ao
+      // componente
       .subscribe(people => this.people = people);
   }
 }
@@ -32,7 +32,7 @@ To use the *EventEmitter* returned by Http, simply pass a generator (See "interf
 http.get('people.json').observer({next: (value) => this.people = people});
 ```
 
-The default construct used to perform requests, *XMLHttpRequest*, is abstracted as a "Backend" ( XHRBackend in this case), which could be mocked with dependency injection by replacing the XHRBackend binding, as in the following example:
+O construção padrão para realizar requisições, *XMLHttpRequest*, é abstraído como "Backend" (XHRBackend no caso), o qual pode ser simulado (mocked) através de injeção de dependências pela substituição do vínculo XHRBackend, como segue o seguinte exemplo:
 
 ``` TypeScript
 import {MockBackend, BaseRequestOptions, Http} from 'angular2/http';

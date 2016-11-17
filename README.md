@@ -213,8 +213,6 @@ Suporte do WebWorker em Angular2 foi desenvolvido para facilmente adicionar para
 <br>[Leia mais »](features/WebWorkers.md)
 
 ##### HTTP
-Http is available as an injectable class, with methods to perform http requests. Calling request returns an EventEmitter which will emit a single Response when a response is received.
-
 HTTP é disponibilizado como uma classe injetável, com métodos para fazer requisições HTTP. Requisições chamadas retornam um EventEmmitter, o qual, irá emitir uma única Resposta quando uma resposta é recebida.
 * [Introdução ao HTTP em Angular 2 em inglês](http://www.syntaxsuccess.com/viewarticle/angular-2.0-and-http)
 <br>[Leia mais »](features/HTTP.md)
@@ -448,7 +446,7 @@ TypeScript é um superset JavaScript fortemente tipado que compila para JavaScri
 
 
 #### Projetos para início rápido em TypeScript
-* [Pacotede Iniciador Angular 2 Webpack](https://angularclass.github.io/angular2-webpack-starter/) - An Angular 2 Webpack kit de início apresentando Angular 2 (Roteador, HTTP, Formulários, Serviços, Testes, Fim a-Fim), Karma, Protractor, Jasmine, TypeScript, e Webpack por @Angular-Class
+* [Pacotede Iniciador Angular 2 Webpack](https://angularclass.github.io/angular2-webpack-starter/) kit de início apresentando Angular 2 (Roteador, HTTP, Formulários, Serviços, Testes, Fim a-Fim), Karma, Protractor, Jasmine, TypeScript, e Webpack por @Angular-Class
 * [Kit de início Angular 2](https://mgechev.github.io/angular-seed/) Projeto para início rápido em Angular 2
 * [angular2-ts-seed](https://github.com/codewareio/angular2-ts-seed) - Um simples e completo projeto de início rápido para Angular 2 usando TypeScript
 * [ng2-play](https://github.com/pkozlowski-opensource/ng2-play) Um playgroud mínimo em Angular 2 usando TypeScript e carregador SystemJS
@@ -478,7 +476,7 @@ TypeScript é um superset JavaScript fortemente tipado que compila para JavaScri
 ---
 
 #### Ionic 2 em Angular 2
-> Ionic é um belo SDK front-end, de código abertp para desenvolvimento híbrido de aplicativos móveis com tecnologias web.
+> Ionic é um belo SDK front-end, de código aberto para desenvolvimento híbrido de aplicativos móveis com tecnologias web.
 
 * [Framework Ionic](http://ionicframework.com) Site oficial do Ionic Framework
 * [Documentação Ionic](http://ionicframework.com/docs/v2/) /documentação oficial Ionic Framework
@@ -490,7 +488,6 @@ TypeScript é um superset JavaScript fortemente tipado que compila para JavaScri
 ---
 
 #### Angular 2 em Cordova
-Apache Cordova is a popular mobile application development framework using CSS3, HTML5, and JavaScript instead of relying on platform-specific APIs.
 Apache Cordova é um popular framework de desenvolvimento de aplicações móveis usando CSS 3, HTML 5 e Javascript invés de depender em APIs específicas de plataformas.
 
 * [Cordova Framework](https://cordova.apache.org/) Página Web Oficial para Apache Cordova
