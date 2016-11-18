@@ -1,69 +1,58 @@
-# View
+# View (visões)
 -----------------------------------
-## Overview
-A View is a core primitive used by angular to render the DOM tree.
-A ViewContainer is location in a View which can accept child Views.
-Every ViewContainer has an associated ViewContainerRef than can contain any number of child Views.
-Views form a tree structure which mimics the DOM tree.
+## Visão Geral
 
-* View is a core rendering construct. A running application is just a collection of Views which are
-  nested in a tree like structure. The View tree is a simplified version of the DOM tree. A View can
-  have a single DOM Element or large DOM structures. The key is that the DOM tree in the View can
-  not undergo structural changes (only property changes).
-* Views represent a running instance of a DOM View. This implies that while elements in a View
-  can change properties, they can not change structurally. (Structural changes such as, adding or
-  removing elements requires adding or removing child Views into ViewContainers).
-* View can have zero or more ViewContainers. A ViewContainer is a marker in the DOM which allows
-  the insertion of child Views.
-* Views are created from a ProtoView. A ProtoView is a compiled DOM View which is efficient at
-  creating Views.
-* View contains a context object. The context represents the object instance against which all
-  expressions are evaluated.
-* View contains a ChangeDetector for looking for detecting changes to the model.
-* View contains ElementInjector for creating Directives.
+Uma View é uma primitiva base usada pelo angular para rederizar uma árvore DOM. 
+Uma ViewContainer(Conteiner de Visões) é um local na View o qual aceita Views filhas.
+Cada ViewContainer tem ViewContainerRef(Referência a um ViewContainer) associado que pode conter um infinidade de Views filhas.
+Views formam uma estrutura de uma árvore que imita um ávore DOM.
 
-## Simple View
+* View é o construtor príncipal de renderização. Uma aplicação é apenas uma coleção de View que são aninhadas em uma estrutura que lembram árvores. Uma árvore de Views é uma versão simplificada de uma árvore DOM. Uma View pode ter um único Elemento DOM ou grandes estruturas DOM. A chave é que a árvore DOM em na View pode não sofrer mudanças estruturais (apenas mudanças de propriedades).
+* Views represeintam uma instância sendo executada de uma View DOM. Isto implica que enquanto elementos em uma View pode mudar propriedades, eles não podem mudar estruturalmente, (Mudanças estruturais como, adição ou remoção de elementos, requer remoção de View filhas dos  ViewContainers). 
+* Views podem ter zero ou mais ViewContainers. Uma ViewContainer é um marcador no DOM que permite a inserção de Views filhas.
+* Views são criados de uma ProtoView (Protítipo de Visão). Uma ProtoView é compilado para uma View DOM o qual é bastante eficiente em criar Views.
+* Views contém um objeto de contexto. Um contexto representa a instância de objeto contra o qual todas as expressõe são avaliadas.
+* View contém um ChangeDetector (Detector de mudanças) para busca por mudanças detectadas no modelo.
+* Views contém ElementInjector(Injetor de Elementos) para criação de Diretivas.
 
-Let's examine a simple View and all of its parts in detail.
+## View Simples
 
-Assume the following Component:
+Vamos examinar uma View simples e todas suas partes em detalhes.
+
+Assuma o seguinte Componente:
 
 ``` javascript
 class Greeter {
   greeting:string;
 
   constructor() {
-    this.greeting = 'Hello';
+    this.greeting = 'Olá';
   }
 }
 ```
-
-And assume following HTML View:
+E assuma a seguinte View HTML:
 
 ``` html
 <div>
-  Your name:
+  Seu nome:
   <input var="name" type="Text">
   <br>
   {{greeting}} {{name.value}}!
 </div>
 ```
 
-The above template is compiled by the Compiler to create a ProtoView. The ProtoView is then used to
-create an instance of the View. The instantiation process involves cloning the above template and
-locating all of the elements which contain bindings and finally instantiating the Directives
-associated with the template. (See compilation for more details.)
+O template acima é compilado pelo Compilador para criar uma ProtoView. A ProtoView é então usada para criar instâncias da View. O processo de instanciação envolve a clonagem do template acima e localizar todos os elementos que contenham vínculos e finalmente é instanciado as Diretivas associadas ao template. (Veja a seção de Compilação para mais detalhes.)
 
 ``` html
 <div>                             | viewA(greeter)
   Your name:                      | viewA(greeter)
-  <input var="name" type="Text">  | viewA(greeter): local variable 'name'
+  <input var="name" type="Text">  | viewA(greeter): variável local 'name'
   <br>                            | viewA(greeter)
-  {{greeting}} {{name.value}}!    | viewA(greeter): binding expression 'greeting' & 'name.value'
+  {{greeting}} {{name.value}}!    | viewA(greeter): expressão de vínculo 'greeting' & 'name.value'
 </div>                            | viewA(greeter)
 ```
 
-The resulting View instance looks something like this (simplified pseudo code):
+A instância resultante da View é algo semelhante a isso (pseudo código simplificado):
 ``` javascript
 viewA = new View({
   template: ...,
@@ -73,21 +62,19 @@ viewA = new View({
 });
 ```
 
-Note:
-* View uses instance of `Greeter` as the evaluation context.
-* View knows of local variables `name`.
-* View knows which expressions need to be watched.
-* View knows what needs to be updated if the watched expression changes.
-* All DOM elements are owned by single instance of the view.
-* The structure of the DOM can not change during runtime. To allow structural changes to the DOM we need
-  to understand Composed View.
+Nota:
+* Views usam instâncias de `Greeter` como contexto de avaliação.
+* View reconhece variáveis locais como `name`.
+* View sabe quais expressões precisam ser observadas.
+* Views sabem o que é preciso para ser atualizado caso uma expressão observada mude.
+* Todos os elementos DOM são pertencentes por uma única instância da View.
+* A estrutura da DOM pode não mudar durante o tempo de execução. Para permitir mudanças estruturais no DOM necessitamos entender Views Compostas.
 
-## Composed View
+## View Compostas
 
-An important part of an application is to be able to change the DOM structure to render data for the
-user. In Angular this is done by inserting child views into the ViewContainer.
+Uma importante parte da aplicação é permitir mudanças na estrutura do DOM para renderizar os dados para o usuário. Em Angular isto é feito pela inserção de View filhas em um ViewContainer.
 
-Let's start with a View such as:
+Vamos começas com uma View como a seguinte:
 
 ``` html
 <ul>
@@ -95,7 +82,7 @@ Let's start with a View such as:
 </ul>
 ```
 
-During the compilation process the Compiler breaks the HTML template into these two ProtoViews:
+Durante o processo de compilação o Compilador quebra o template HTML em estas duas ProtoViews:
 
 ``` html
   <li>{{person}}</li>   | protoViewB(Locals)
@@ -109,10 +96,9 @@ and
 </ul>                   | protoViewA(someContext)
 ```
 
+O próximo passo é compôr estas PropoViews em um View de fato oqual é rederizada para o usuário.
 
-The next step is to compose these two ProtoViews into an actual view which is rendered to the user.
-
-*Step 1:* Instantiate `viewA`
+*Passo 1:* Instancia-se `viewA`
 
 ``` html
 <ul>                    | viewA(someContext)
@@ -120,12 +106,11 @@ The next step is to compose these two ProtoViews into an actual view which is re
 </ul>                   | viewA(someContext)
 ```
 
-*Step2:* Instantiate `NgFor` directive which will receive the `ViewContainerRef`. (The ViewContainerRef
-has a reference to `protoViewA`).
+*Passo 2:* Intancia-se a diretiva `NgFor` o qual irá receber a `ViewContainerRef`. (A ViewContainerRef tem uma referência a `protoViewA`).
 
+*Passo 3:* Como a diretiva irá executar irá pergunta ao `ViewContainerRef` para instanciar `protoViewB` e irá inserí-lo logo após a âncora do `ViewContainer`. Isto é repetivo a cada `person` in `people`.
 
-*Step3:* As the `NgFor` directive unrolls it asks the `ViewContainerRef` to instantiate `protoViewB` and insert
-it after the `ViewContainer` anchor. This is repeated for each `person` in `people`. Notice that
+Note que
 
 ``` html
 <ul>                    | viewA(someContext)
@@ -148,50 +133,43 @@ delegate any unknown references to the parent context.
 </ul>                   | viewA
 ```
 
-Each View can have zero or more ViewContainers. By inserting and removing child Views to and from the
-ViewContainers, the application can mutate the DOM structure to any desirable state. A View may contain
-individual nodes or a complex DOM structure. The insertion points for the child Views, known as
-ViewContainers, contain a DOM element which acts as an anchor. The anchor is either a `template` or
-a `script` element depending on your browser. It is used to identify where the child Views will be
-inserted.
+Cada View pode ter entre zero ou mais ViewContainers. Pela inserção ou remoção de View filhas para ou de um ViewContainer, a aplicação pode  mudar a estrutura DOM em qualquer estado desejado. Uma View pode conter nós individuais ou complexas estruturas DOM. A inserção de pontos para View filhas, conhecido como ViewContainers, contém um elemento DOM o qual age como uma âncora. A âncora pode ser tanto um `template` quanto um elemento script dependendo do seu browser; Isto é usado para identificar onde as Views filhas irá ser inseridas. 
 
-## Component Views
+## Componente de Views
 
-A View can also contain Components. Components contain Shadow DOM for encapsulating their internal
-rendering state. Unlike ViewContainers which can contain zero or more Views, the Component always contains
-exactly one Shadow View.
+Uma View pode ter também conter Componentes. Componentes contém Shadow DOM para encapsulamento de seu estado interno de renderização. Ao contrário aos ViewContainers que podem ter zero ou mais Views, o Componente sempre terá exatamente um único Shadow View.
 
 ``` html
 <div>                            | viewA
   <my-component>                 | viewA
-    #SHADOW_ROOT                 | (encapsulation boundary)
+    #SHADOW_ROOT                 | (fronteira de encapsulamento)
       <div>                      |   viewB
-         encapsulated rendering  |   viewB
+  renderização encapsulada       |   viewB
       </div>                     |   viewB
   </my-component>                | viewA
 </div>                           | viewA
 ```
 
-## Evaluation Context
+## Contexto de Avaliação
 
-Each View acts as a context for evaluating its expressions. There are two kinds of contexts:
+Cada View age como um contexto para avaliação de suas expressões. Há dois tipos de contextos: 
 
-1. A component controller instance and
-2. a `Locals` context for introducing local variables into the View.
+1. Uma instância de um componente Controller e
+2. um contexto `Locals` para introdução de variáveis locais na View.
 
-Let's assume following component:
+Vamos assumir o seguinte componente:
 
 ``` javascript
 class Greeter {
   greeting:string;
 
   constructor() {
-    this.greeting = 'Hello';
+    this.greeting = 'Olá';
   }
 }
 ```
 
-And assume the following HTML View:
+E assumir a seguinte View HTML:
 
 ``` html
 <div>                             | viewA(greeter)
@@ -202,41 +180,31 @@ And assume the following HTML View:
 </div>                            | viewA(greeter)
 ```
 
-The above UI is built using a single View, and hence a single context `greeter`. It can be expressed
-in this pseudo-code.
+A Interface do Usuário é contruida usando uma única View, e consequentemente um único contexto para `gretter`. Isto pode ser expressado em pseudo-código:
 
 ``` javascript
 var greeter = new Greeter();
 ```
 
-The View contains two bindings:
+A View contém dois vínculos:
 
-1. `greeting`: This is bound to the `greeting` property on the `Greeter` instance.
-2. `name.value`: This poses a problem. There is no `name` property on the `Greeter` instance. To solve
-this we wrap the `Greeter` instance in the `Local` instance like so:
+1. `gretting`: limita a propriedade `greeting` na instância `Greeter`.
+2. `name.value`: isto põe um problema. Não há propriedade `name`na instância `Greeter`. Para resolver nós envolver a instância Greeter em uma instância `Local` como abaixo:
 
 ``` javascript
-var greeter = new Locals(new Greeter(), {name: ref_to_input_element })
+var greeter = new Locals(new Greeter(), {name: referência_ao_elemento_de_entrada })
 ```
 
+Por envolvermos a instância de `Greeter` em `Locals`permitimos que a View intrtoduza variáveis o qual são adicionadas a instância de `Greeter`. Durante a resolução das expressões primeiramente checamos o Locals, e somente então a instância de `Greeter`.
 
-By wrapping the `Greeter` instance into the `Locals` we allow the view to introduce variables which
-are in addition to the `Greeter` instance. During the resolution of the expressions we first check
-the locals, and then the `Greeter` instance.
+## Ciclo de Vida da View (Hidratação e Desidatração)
 
-## View LifeCycle (Hydration and Dehydration)
+Transição de View através de um particular conjunto de estados:
 
-Views transition through a particular set of states:
-
-1. View is created from the ProtoView.
-2. View can be attached to an existing ViewContainerRef.
-3. Upon attaching View to the ViewContainerRef the View needs to be hydrated. The hydration process
-   involves instantiating all of the Directives associated with the current View.
-4. At this point the view is ready and renderable. Multiple changes can be delivered to the
-   Directives from the ChangeDetection.
-5. At some point the View can be removed. At this point all of the directives are destroyed during
-   the dehydration process and the view becomes inactive.
-6. The View has to wait until it is detached from the DOM. The delay in detaching could be caused
-   because an animation is animating the view away.
-7. After the View is detached from the DOM it is ready to be reused. The view reuse allows the
-   application to be faster in subsequent renderings.
+1. View podem ser criadas de um ProtoView.
+2. Views pode ser anexadas em uma ViewContainerRef.
+3. Sobre a anexação da View para uma ViewContainerRef, a View precisa ser hidratada. A hidratação envolve a instanciação de todas as Diretivas associadas com a View corrente. 
+4. Até este ponto a View está preparada e renderizável. Multiplas mudanças pode ser entregues por Diretivas vindas da Detecção de Mudanças.
+5. Em algum momento a View pode ser removida. Neste ponto todas as diretivas são destruidas durante o processo de Desidatração e a View torna-se inativa.
+6. A View tem que esperar até que seja desanexada do DOM. O atraso em desanexar pode ser causado por alguma animação que esteja animando a saída da View.
+7. Apóis a view ser desanexada do DOM está pronta para ser reutilizada. O reuso de Views permite a aplicação ser mais rápida in rederizações subsequentes.

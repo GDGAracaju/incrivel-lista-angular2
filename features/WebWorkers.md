@@ -1,29 +1,22 @@
-# Web Workers
+# Web Workers (Trabalhadores Web)
 
-Angular 2 includes native support for writing applications which live in a
-WebWorker. This document describes how to write applications that take advantage
-of this feature.
-It also provides a detailed description of the underlying messaging
-infrastructure that angular uses to communicate between the main process and the
-worker. This infrastructure can be modified by an application developer to
-enable driving an angular 2 application from an iFrame, different window / tab,
-server, etc..
+Angular 2 inclui suporte nativo para escrita de aplicações que vivem em um WebWorker. Este documento descreve como escrever aplicações que tomam vantagem deste recurso. 
+Também provê uma descrição detalhada da infraestrutura de mensagens subjacente que o Angular usa para comunicação entre o processo principal e os Workers. Esta infraestrutura que o angular usa pode ser modificado por um desenvolvedor de aplicações para executar uma aplicação Angular 2 de um iFram, janelas / abas diferentes, servidores, etc...
 
-## Introduction
-WebWorker support in Angular2 is designed to make it easy to leverage parallelization in your web application.
-When you choose to run your application in a WebWorker angular runs both your application's logic and the
-majority of the core angular framework in a WebWorker.
-By offloading as much code as possible to the WebWorker we keep the UI thread
-free to handle events, manipulate the DOM, and run animations. This provides a
-better framerate and UX for applications.
 
-## Bootstrapping a WebWorker Application
-Bootstrapping a WebWorker application is not much different than bootstrapping a normal application.
-The primary difference is that you don't pass your root component directly to ```bootstrap```.
-Instead you pass the name of a background script that calls ```bootstrapWebWorker``` with your root component.
+## Introdução 
 
-### Example
-To bootstrap Hello World in a WebWorker we do the following in TypeScript
+Suporte a WebWorker em Angular2 foi desenvolvido para ser fácil aumentar a paralelização em sua aplicação Web. 
+Quanto você escolhe executar em um WebWorker Angular executa ambas lógica de aplicação e a maioria do núcleo do framework Angular em um WebWorker.
+Por descarregar o tanto de código quanto possível em um WebWorker mantemos a thread de Interface de Usuário livre para manipular eventos, manipular o DOM, e executar animações. Isto provê uma melhor taxa de quadros e Expreiência de Usuário para aplicações.
+
+## Inicialização (Bootstrapping) de uma  Aplicação WebWorker
+Inicialização de uma aplicação WebWorker não é muito diferente de uma Inicialização de uma aplicação comum.
+A diferença primária é que você não passa o componente raiz diretamente em ```bootstrap```.
+Ao invés disso, você passa o nome de um script de background que chama ```bootstrapWebWorker```com seu componente raiz. 
+
+### Examplo
+Para inicializar Hello World em WebWorker precisamos fazer o seguinte em TypeScript:
 ```HTML
 <html>
   <head>
@@ -54,7 +47,7 @@ import {Component, View, bootstrapWebWorker} from "angular2/web_worker/worker";
   selector: "hello-world"
 })
 @View({
-  template: "<h1>Hello {{name}}</h1>
+  template: "<h1>Olá {{name}}</h1>
 })
 export class HelloWorld {
   name: string = "Jane";
@@ -62,27 +55,13 @@ export class HelloWorld {
 
 bootstrapWebWorker(HelloWorld);
 ```
-There's a few important things to note here:
-* On the UI side we import all angular types from `angular2/web_worker/ui` and on the worker side we import from
-`angular2/web_worker/worker`. These modules include all the typings in the WebWorker bundle. By importing from
-these URLs instead of `angular2/angular2` we can statically ensure that our app does not reference a type that
-doesn't exist in the context it's mean to execute in. For example, if we tried to import DomRenderer in the Worker
-or NgFor on the UI we would get a compiler error.
-* The UI loads angular from the file `angular2/web_worker/ui.js` and the Worker loads angular from
-`angular2/web_worker/worker.js`. These bundles are created specifically for using WebWorkers and should be used
-instead of the normal angular2.js file. Both files contain subsets of the angular2 codebase that is designed to
-run specifically on the UI or Worker. Additionally, they contain the core messaging infrastructure used to
-communicate between the Worker and the UI. This messaging code is not in the standard angular2.js file.
-* We pass `loader.js` to bootstrap and not `app.ts`. You can think of `loader.js` as the `index.html` of the
-Worker. Since WebWorkers share no memory with the UI we need to reload the angular2 dependencies before
-bootstrapping our application. We do this with importScripts. Additionally, we need to do this in a different
-file than `app.ts` because our module loader (System.js in this example) has not been loaded yet, and `app.ts`
-will be compiled with a System.define call at the top.
-* The HelloWorld Component looks exactly like a normal Angular2 HelloWorld Component! The goal of WebWorker
-support was to allow as much of Angular to live in the worker as possible.
-As such, *most* angular2 components can be bootstrapped in a WebWorker with minimal to no changes required.
+Há algumas coisas importantes para tomar nota aqui:
+* Do lado da Interface nós importamos todos os tipos de `angular2/web_worker/ui` e sobre o lado do Worker nós importamos de `angular2/web_worker/worker`. Estes módulos incluem todos as declarações no pacote WebWorker. Por importar destas URLs invés de `angular2/angular2` podemos assegurar estaticamente que nossa aplicação não faz referências a um tipo que não existe no context que se procura executar. Por exemplo, se tentássemos importar DomRenderer em um WebWorker ou NgFor na Interface nós podemos obter um erro de compilação.
+* A Interface carrega o Angular do arquivo `angular2/web_worker/ui.js` e o Worker carrega o angular do `angular2/web_worker/worker.js`. Estes pacotes são criados especificamente para ser usados com WebWorkers e devem ser usados ao invés do arquivo `angular2.js` normal. Ambos os arquivos contém subconjuntos de código base que foi desenvolvido para ser executado especificamente sobre a Interface de Usuário ou Worker. Adicionalmente, eles contém a infraestrutura núcleo de mensageria que é usado para comunicação entre o IU ou Worker. Este código de mensageria não está no arquivo `angular2.js` padrão.
+* Passamos `loader.js`para Inicialização e não `app.ts`. Você pode pensar de `loader.js` como uma `index.html` de um Worker. Como WebWorkers não compartilham memória com a IU precisamos recarregar as dependências do Angular 2 antes de iniciarmos nossa aplicação. Fazemos isto com importScripts. Adicionalmente, precisamos fazer o carregamente em um arquivo diferente do arquivo `app.ts`porque nosso carregador de módulos(System.js neste exemplo) não foi carregado ainda, e `app.ts` irá ser compilado com uma chamada a System.define no seu topo. 
+* O componente HelloWorld parece exatamente como um componente Angular 2 HelloWorld comum! O objetivo do suporte a WebWorkers foi para permitir que muito do Angular vivesse em um worker o quanto possível. Como tal, *maior* parte do componentes Angular 2 pode ser inicializados em um WebWorker com nenhuma ou pouquíssimas mudanças requeridas. 
 
-For reference, here's the same HelloWorld example in Dart.
+Para referência, aqui o mesmo exemplo de HelloWorld em Dart.
 ```HTML
 <html>
   <body>
@@ -111,7 +90,7 @@ import "package:angular2/src/core/reflection/reflection_capabilities.dart";
   selector: "hello-world"
 )
 @View(
-  template: "<h1>Hello {{name}}</h1>"
+  template: "<h1>Olá {{name}}</h1>"
 )
 class HelloWorld {
   String name = "Jane";
@@ -123,13 +102,9 @@ main(List<String> args, SendPort replyTo) {
 }
 
 ```
-This code is nearly the same as the TypeScript version with just a couple key differences:
-* We don't have a `loader.js` file. Dart applications don't need this file because you don't need a module loader.
-* We pass a `SendPort` to `bootstrapWebWorker`. Dart applications use the Isolate API, which communicates via
-Dart's Port abstraction. When you call `bootstrap` from the UI thread, angular starts a new Isolate to run
-your application logic. When Dart starts a new Isolate it passes a `SendPort` to that Isolate so that it
-can communicate with the Isolate that spawned it. You need to pass this `SendPort` to `bootstrapWebWorker`
-so that Angular can communicate with the UI.
+Este código é quase o mesmo da versão em TypeScript com apenas algumas poucas diferenças chave:  
+* Não temos um arquivo `loader.js`. Aplicações Dart não precisam deste arquivo porque você não vai precisar de um carregador de módulos.
+* Passamos um `SendPort` para `bootstrapWebWorker`. Aplicações Dart usam a API Isola, o qual comunica-se por abstrações de portas do Dart. Quando você chama `bootstrap`da thread de IU, Angular inicia um novo Isolate para executar sua lógica de aplicação. Quando Dart inicia um novo Isolate ele passa um `SendPort`ára o Isolate para que possa se comunicar com o Isolate que a criou. Você precisa passar uma `SendPort` para `boostrapWebWorker`para que o Angular possa se comunicar com IU.
 * You need to set up `ReflectionCapabilities` on both the UI and Worker. Just like writing non-concurrent
 Angular2 Dart applications you need to set up the reflector. You should not use Reflection in production,
 but should use the angular 2 transformer to remove it in your final JS code. Note there's currently a bug
