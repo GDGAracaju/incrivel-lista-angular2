@@ -105,133 +105,98 @@ main(List<String> args, SendPort replyTo) {
 Este código é quase o mesmo da versão em TypeScript com apenas algumas poucas diferenças chave:  
 * Não temos um arquivo `loader.js`. Aplicações Dart não precisam deste arquivo porque você não vai precisar de um carregador de módulos.
 * Passamos um `SendPort` para `bootstrapWebWorker`. Aplicações Dart usam a API Isola, o qual comunica-se por abstrações de portas do Dart. Quando você chama `bootstrap`da thread de IU, Angular inicia um novo Isolate para executar sua lógica de aplicação. Quando Dart inicia um novo Isolate ele passa um `SendPort`ára o Isolate para que possa se comunicar com o Isolate que a criou. Você precisa passar uma `SendPort` para `boostrapWebWorker`para que o Angular possa se comunicar com IU.
-* You need to set up `ReflectionCapabilities` on both the UI and Worker. Just like writing non-concurrent
-Angular2 Dart applications you need to set up the reflector. You should not use Reflection in production,
-but should use the angular 2 transformer to remove it in your final JS code. Note there's currently a bug
-with running the transformer on your UI code (#3971). You can (and should) pass the file where you call
-`bootstrapWebWorker` as an entry point to the transformer, but you should not pass your UI index file
-to the transformer until that bug is fixed.
+* Você precisará configurar `ReflectionCapabilities(Capacidades de Reflexão)` em ambos IU e Worker. Da mesma forma de escrita de aplicações as não-concorrentes em Angular 2 Dart você precisa configurar o refletor(reflector). Você não deve usar Reflecção(Reflection) em produção, mas deve usar o transformador Angular 2 para removê-lo em seu código final em JavaScript. Note que há um bug com a execução do transformado com seu código IU (#3971). Você pode (e deve) passar o arquivo onde você chama `bootstrapWebWorker` como um ponto de entrada para o transformador, mas você não deve passar seu arquivo index da IU para o transformado até o bug ser consertado. 
 
-## Writing WebWorker Compatible Components
-You can do almost everything in a WebWorker component that you can do in a typical Angular 2 Component.
-The main exception is that there is **no** DOM access from a WebWorker component. In Dart this means you can't
-import anything from `dart:html` and in JavaScript it means you can't use `document` or `window`. Instead you
-should use data bindings and if needed you can inject the `Renderer` along with your component's `ElementRef`
-directly into your component and use methods such as `setElementProperty`, `setElementAttribute`,
-`setElementClass`, `setElementStyle`, `invokeElementMethod`, and `setText`. Not that you **cannot** call
-`getNativeElementSync`. Doing so will always return `null` when running in a WebWorker.
-If you need DOM access see [Running Code on the UI](#running-code-on-the-ui).
+## Escrevendo Componentes Compatíveis com WebWorker
+Você pode fazer quase tudo em um componente WebWorker que possa ser feito em um Componente típico Angular 2.
+A princípal execeção é que **não** há acesso ao DOM de um componente WebWorker. Em Dart isto significa que você não pode importar nada de `dart:html` e em JavaScript isto significa que você não pode usar `document` ou `window`. Ao invés disso, você deve usar vínculos de dados e ser for necessário você pode injetar o `Renderer` junto com seu `ElementRef` do componente e usar métodos como `setElementProperty`, `setElementAttribute`, `setElementClass`, `setElementStyle`, e `setText`. Não que você *não possa*  chamar `getNativeElementSync`. Fazendo isto irá retornar sempre `null` quando executado em um WebWorker. 
+Se você precisa de acesso ao DOM veja [Executando código sobre a IU](#xecutando-código-sobre-a-iu).
 
-## WebWorker Design Overview
-When running your application in a WebWorker, the majority of the angular core along with your application logic
-runs on the worker. The two main components that run on the UI are the `Renderer` and the `RenderCompiler`. When
-running angular in a WebWorker the bindings for these two components are replaced by the `WebWorkerRenderer` and
-the `WebWorkerRenderCompiler`. When these components are used at runtime, they pass messages through the
-[MessageBroker](#messagebroker) instructing the UI to run the actual method and return the result. The
-[MessageBroker](#messagebroker) abstraction allows either side of the WebWorker boundary to schedule code to run
-on the opposite side and receive the result. You can use the [MessageBroker](#messagebroker)
-Additionally, the [MessageBroker](#messagebroker) sits on top of the [MessageBus](#messagebus).
-MessageBus is a low level abstraction that provides a language agnostic API for communicating with angular components across any runtime boundary such as `WebWorker <--> UI` communication, `UI <--> Server` communication,
-or `Window <--> Window` communication.
+## Visão geral do Design WebWorker
+Quanto sua aplicação é executada em um Webworker, a maior parte do núcleo do Angular justo com a lógica de aplicação é executando em um Worker. Os dois principais componentes que executam sebre a IU são `Renderer` e o `RendererCompiler`. Quando se executa Angular em um WebWorker os vínculos destes dois componentes são substituidos por `WebWorkerRenderer` e `WebWorkerRenderCompiler`. Quando estes componentes são usados em tempo de execução, eles passam mensagens através do [MessageBroker (Coordenador de Mensagens)](#messagebroker) instruindo a IU para executar o método de fato e retorna o resultado. A abstração do [MessageBroker](#messagebroker) permite que qualquer lado da fronteira do WebWorker agendar código a ser executado  no lado oposto e receber o resultado. 
+Adicionalmente, o [MessageBroker](#messagebroker) roda sobre o [MessageBus (barramento de mensagens)](#messagebus).
+MessageBus é uma abstração de baixo nível que provês uma API agnóstica a linguagens para comunicação de componentes Angular através de qualquer fronteira de tempo de execução como a comuinicação `WebWorker <--> IU` , comunicação `UI <--> Servidor`. ou comunicação `Window <--> Window`. 
 
-See the diagram below for a high level overview of how this code is structured:
+Veja o diagrama abaixo para uma Visão Geral de Alto Nível de como este código é estruturado:
 
-![WebWorker Diagram](http://stanford.edu/~jteplitz/ng_2_worker.png)
+![Diagrama WebWorker](http://stanford.edu/~jteplitz/ng_2_worker.png)
 
-## Running Code on the UI
-If your application needs to run code on the UI, there are a few options. The easiest way is to use a
-CustomElement in your view. You can then register this custom element from your html file and run code in response
-to the element's lifecycle hooks. Note, Custom Elements are still experimental. See
-[MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) for the latest details on how
-to use them.
+## Executando Código Sobre a IU
+Se sua aplicação necessitar de executar código sobre a IU, há algumas opções. O modo mais fácil é usar um CustomElement(Elemento Customizado) em sua View. Você pode registrar este elemento customizado de seu arquivo HTML e executar código em resposta ao ganchos de ciclo de vida do elemento. Note, Elementos Customizados ainda são esperimentais. Veja [MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) para os últimos detalhes sobre como usá-los.
 
-If you require more robust communication between the WebWorker and the UI you can use the [MessageBroker](#using-the-messagebroker-in-your-application) or
-[MessageBus](#using-the-messagebus-in-your-application) directly.
+Se você requer mais robustez na comunicação entre WebWorker e a IU você pode usar o [MessageBroker](#usando-o-messagebroker-em-sua-aplicação) ou [MessageBus](#usando-o-messagebus-em-sua-aplicação) diretamente.
 
-## MessageBus
-The MessageBus is a low level abstraction that provides a language agnostic API for communicating with angular components across any runtime boundary. It supports multiplex communication through the use of a channel
-abstraction.
+## MessageBus (Barramento de Mensagenss)
+O MessageBus é uma abstração de baixo nível que provê uma API agnóstica a linguagem para comunicação com componentes Angular através da fronteira de tempo de execução. Suporta comunicação multiplex através do uso de abstração de canais.
 
-Angular currently includes two stable MessageBus implementations, which are used by default when you run your
-application inside a WebWorker.
+Angular atualmente inclui duas implementações estáveis de MessageBus, o qual é utilizado por padrão quando você executa sua aplicação em WebWorker,
 
-1. The `PostMessageBus` is used by JavaScript applications to communicate between a WebWorker and the UI.
-2. The `IsolateMessageBus` is used by Dart applications to communicate between a background Isolate and the UI.
+1. O `PostMessageBus(Enviar para o Barramento de Mensagens)` é utilizado em aplicações JavaScript para comunicação entre um Isolate em backgroud e a IU.
+2. O `IsolateMessageBus (Barramento de Mensagens Isolada) é usado por aplicações Dart para comunicação entre um Isolate em Background para a IU.
 
-Angular also includes three experimental MessageBus implementations:
+Angular também inclui três implementações experimentais de MensageBus: 
 
-1. The `WebSocketMessageBus` is a Dart MessageBus that lives on the UI and communicates with an angular
-application running on a server. It's intended to be used with either the `SingleClientServerMessageBus` or the
-`MultiClientServerMessageBus`.
-2. The `SingleClientServerMessageBus` is a Dart MessageBus that lives on a Dart Server. It allows an angular
-application to run on a server and communicate with a single browser that's running the `WebSocketMessageBus`.
-3. The `MultiClientServerMessageBus` is like the `SingleClientServerMessageBus` except it allows an arbitrary
-number of clients to connect to the server. It keeps all connected browsers in sync and if an event fires in
-any connected browser it propagates the result to all connected clients. This can be especially useful as a
-debugging tool, by allowing you to connect multiple browsers / devices to the same angular application,
-change the state of that application, and ensure that all the clients render the view correctly. Using these tools
-can make it easy to catch tricky browser compatibility issues.
 
-### Using the MessageBus in Your Application
-**Note**: If you want to pass custom messages between the UI and WebWorker, it's recommended you use the
-[MessageBroker](#using-the-messagebroker-in-your-application). However, if you want to control the messaging
-protocol yourself you can use the MessageBus directly.
+1. O `WebSocketMessageBus`é um MessageBus Dart que vvi na IU e comunica-se com uma aplicação Angular rodando no servidor. Foi feito para ser utilizado tanto com `SingleClientServerMessageBus` quanto `MultiClientServerMessageBus`. 
+2. O `SingleClientServerMessageBus`é um MesageBus Dart que vivew em um servidor Dart. Permite que uma aplicação Angular rode em um servidor e se comunique com um único browser que rode `WebSocketMessageBus`.
+3. O `MultiClientServerMessageBus` é como o `SingleClientServerMessageBus` exceto que permite que um número arbitrário de clientes se conectem ao servidor. Isto mantém todos os browser conectados em sincronia e se um evento é disparado em algum browser conectado o resultado é propagado para todos os clentes conectados. Isto pode ser especialmente útil como ferramenta de depuração, por permitir a você conectar a multiplos browser / dispositivos para a mesma aplicação Angular, mudar o estado daquela aplicação. e assegurar que todos os clientes renderizam a View corretamente. Usando estas ferramentas facilitam encontrar problemas de compatibilidade de browser mais rápido. 
 
-To use the MessageBus you need to initialize a new channel on both the UI and WebWorker.
-In TypeScript that would look like this:
+### Usando o MessageBus em sua Aplicação
+**Nota**: Se você quiser passar mensagens customizadas entre a IU e WebWorker, é recomendável você usar o [MessafeBroker](#usando-o-messagebroker-em-sua-aplicação). Porém, se queser controler o protocolo de mensagem por você mesmo, você pode usar o MessageBus diretamente.
+
+Para usar o MessageBus você precisa inicializar um novo canal sobre o IU e WebWorker.
+Em TypeScript isto irá parecer com o seguinte:
 ```TypeScript
 // index.ts, which is running on the UI.
 var instance = bootstrap("loader.js");
 var bus = instance.bus;
-bus.initChannel("My Custom Channel");
+bus.initChannel("Meu canal customizado");
 ```
 ```TypeScript
-// background_index.ts, which is running on the WebWorker
+// background_index.ts, que está rodando sobre WebWorker
 import {MessageBus} from 'angular2/web_worker/worker';
 @Component({...})
 @View({...})
 export class MyComponent {
   constructor (bus: MessageBus) {
-    bus.initChannel("My Custom Channel");
+    bus.initChannel("Meu canal customizado");
   }
 }
 ```
 
-Once the channel has been initialized either side can use the `from` and `to` methods on the MessageBus to send
-and receive messages. Both methods return EventEmitter. Expanding on the example from earlier:
+Uma vez que o canal tenha sido inicializado ambos os lados podem ser usados  tanto os métodos `from` e `to` em MessageBus para enviar e receber mensagens respectivamente. Ambos os métodos retornam EventEmitter. Expandindo o exemplo anterior: 
 ```TypeScript
-// index.ts, which is running on the UI.
+// index.ts, o quall está rodando na IU.
 import {bootstrap} from 'angukar2/web_worker/ui';
 var instance = bootstrap("loader.js");
 var bus = instance.bus;
-bus.initChannel("My Custom Channel");
-bus.to("My Custom Channel").next("hello from the UI");
+bus.initChannel("Meu canal customizado");
+bus.to("Meu canal customizado").next("Olá da IU");
 ```
 ```TypeScript
-// background_index.ts, which is running on the WebWorker
+// background_index.ts, o qual está rodando no WebWorker
 import {MessageBus, Component, View} from 'angular2/web_worker/worker';
 @Component({...})
 @View({...})
 export class MyComponent {
   constructor (bus: MessageBus) {
-    bus.initChannel("My Custom Channel");
-    bus.from("My Custom Channel").observer((message) => {
-      console.log(message); // will print "hello from the UI"
+    bus.initChannel("Meu canal customizado");
+    bus.from("Meu canal customizado").observer((message) => {
+      console.log(message); // irá imprimir "Olá da UI"
     });
   }
 }
 ```
-
-This example is nearly identical in Dart, and is included below for reference:
+Este exemplo é bastante identico em Dart, e incluimos por referência:
 ```Dart
-// index.dart, which is running on the UI.
+// index.dart, que está sendo rodade na IU.
 import 'package:angular2/web_workers/ui.dart';
 
 main() {
   var instance = bootstrap("background_index.dart");
   var bus = instance.bus;
-  bus.initChannel("My Custom Channel");
-  bus.to("My Custom Channel").add("hello from the UI");
+  bus.initChannel("Meu canal customizado");
+  bus.to("Meu canal customizado").add("Olá da IU");
 }
 
 ```
@@ -242,55 +207,36 @@ import 'package:angular2/web_worker/worker.dart';
 @View(...)
 class MyComponent {
   MyComponent (MessageBus bus) {
-    bus.initChannel("My Custom Channel");
-    bus.from("My Custom Channel").listen((message) {
-      print(message); // will print "hello from the UI"
+    bus.initChannel("Meu canal customizado");
+    bus.from("Meu canal customizado").listen((message) {
+      print(message); // irá imprimir "Olá da IU"
     });
   }
 }
 ```
-The only substantial difference between these APIs in Dart and TypeScript is the different APIs for the
-`EventEmitter`.
 
-**Note** Because the messages passed through the MessageBus cross a WebWorker boundary, they must be serializable.
-If you use the MessageBus directly, you are responsible for serializing your messages.
-In JavaScript / TypeScript this means they must be serializable via JavaScript's
-[structured cloning algorithim](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+A única diferença substancial entre APIs Dart e TypeScript é a API para o `EventEmitter`.
 
-In Dart this means they must be valid messages that can be passed through a
-[SendPort](https://api.dartlang.org/1.12.1/dart-isolate/SendPort/send.html).
+**Nota** Por causa das mensagens passadas através do MessageBus crusa a fronteira do WebWorker, ele precisam ser serializados.
+Se você usar o MessageBus diretamente, você é responsável por serializar suas mensagens.
+Em JavaScript / TypeScript isto significa que ele deve ser serializável via [algoritmo de clone estruturado] (https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
 
+Em Dart isto significa que as mensagens devem ser validas para serem passadas por um [SendPort](https://api.dartlang.org/1.12.1/dart-isolate/SendPort/send.html).
 
-### MessageBus and Zones
-The MessageBus API includes support for [zones](http://www.github.com/angular/zone.js).
-A MessageBus can be attached to a specific zone  (by calling `attachToZone`). Then specific channels can be
-specified to run in the zone when they are initialized.
-If a channel is running in the zone, that means that any events emitted from that channel will be executed within
-the given zone. For example, by default angular runs the EventDispatch channel inside the angular zone. That means
-when an event is fired from the DOM and received on the WebWorker the event handler automatically runs inside the
-angular zone. This is desired because after the event handler exits we want to exit the zone so that we trigger
-change detection. Generally, you want your channels to run inside the zone unless you have a good reason for why
-they need to run outside the zone.
+### MessageBus e Zones
+A API MessageBus inclui support para [Zones(Zonas)](http://www.github.com/angular/zone.js).
+Um MessageBus pode ser anexada a uma específia zona(zone)(através de chamada a `attachToZone`). Então canais específicos podem ser especificados para executar na zona quando eles forem inicializados.
+Se um canal é executado na zona, isto significa que qualquer evento emitido daquele canal irá ser executado dentro de uma dada zona. Por exemplo, por padrão Angular executa o canal EventDispatch (Dispachador de Eventos) dentro da zona do Angular. Isto significa que quando um evento é disparado de um DOM e recebido em um WebWorker o manipulador de evento automaticamente executa dentro da zona Angular Isto é desejado porque depois do manipulador de evento sair nós desejamos sair da zona para que disparemos a detecção de mudanças. Geralmente, você quer seus canais rodem dentro de zonas a menos que vocÊ tenha uma boa razão para executar fora da zona.
 
-### Implementing and Using a Custom MessageBus
-**Note** Implementing and using a Custom MesageBus is experimental and requires importing from private APIs.
+### Implementando e Usando um MessageBus Customizada
+**Nota** Implementar e usar um MessageBuss Customizada é experimental e requer importar de APIs privadas.
 
-If you want to drive your application from something other than a WebWorker you can implement a custom message
-bus. Implementing a custom message bus just means creating a class that fulfills the API specified by the
-abstract MessageBus class.
+Se você quer execuar sua aplicação de alguma outra coisa que um WebWorker você pode implementar um barramento de mensagens customizada. Implementar apenas significa criar uma classe que preencha a API especificada pela classe abstrata MessageBus.
 
-If you're implementing your MessageBus in Dart you can extend the `GenericMessageBus` class included in angular.
-if you do this, you don't need to implement zone or channel support yourself. You only need to implement a
-`MessageBusSink` that extends `GenericMessageBusSink` and a `MessageBusSource` that extends
-`GenericMessageBusSource`. The `MessageBusSink` must override the `sendMessages` method. This method is
-given a list of serialized messages that it is required to send through the sink.
-The `MessageBusSource` needs to provide a [Stream](https://api.dartlang.org/1.12.1/dart-async/Stream-class.html)
-of incoming messages (either by passing the stream to `GenericMessageBusSource's` constructor or by calling
-attachTo() with the stream). It also needs to override the abstract `decodeMessages` method. This method is
-given a List of serialized messages received by the source and should perform any decoding work that needs to be
-done before the application can read the messages.
+Se você está implementando seu MessageBus em Dart você pode extender a classe `GenericMessageBus` incluso no Angular. Se o fizer, você não precisará implementar suporte a canais nem zonas você mesmo. Você apenas precisará implementar uma `MessageBusSink` que extende `GenericMessageBusSink`e um `MessageBusSource` que extende de `GenericMessageBusSource`. O `MessageBusSink` deve sobrescrever o método `sendMessages`. Este método é dado uma lista de mensagens serializadas que é requerido para enviar pelo coletor.
+O `MessageBusSource` precisa provê um [Stream(fonte)](https://api.dartlang.org/1.12.1/dart-async/Stream-class.html) de mensagens recebidas (tanto por passar a fonte para o constructor de `GenericMessaBusSource` ou chamar attachTo() com a fonte). Também é necessário sobrescrever o método abstrato `decodeMessages`. Este método é dado uma lista de mensagens serializadas recebidas pela origem e deve executar qualquer trabalho de decodificação que seja necessário antes de a aplicação possa ler as mensagens.
 
-For example, if your MessageBus sends and receives JSON data you would do the following:
+Por exemplo, se seu MessageBus envia e recebe dados em JSON você poderia fazer o seguinte: 
 ```Dart
 import 'package:angular2/src/web_workers/shared/generic_message_bus.dart';
 import 'dart:convert';
@@ -312,26 +258,24 @@ class JsonMessageBusSource extends GenericMessageBuSource {
   }
 }
 ```
-
-Once you've implemented your custom MessageBus in either TypeScript or Dart you can tell angular to use it like
-so:
-In TypeScript:
+Uma vez que você tenha implementado seu MessageBus customizado tanto em TypeScript ou Dart você pode dizer ao Angular para usar como segue:
+Em TypeScript:
 ```TypeScript
-// index.ts, running on the UI side
+// index.ts, executando no lado do IU
 import {bootstrapUICommon} from 'angular2/src/web_workers/ui/impl';
 var bus = new MyAwesomeMessageBus();
 bootstrapUICommon(bus);
 ```
 ```TypeScript
-// background_index.ts, running on the application side
+// background_index.ts, executando no lado da aplicação
 import {bootstrapWebWorkerCommon} from 'angular2/src/web_workers/worker/application_common';
 import {MyApp} from './app';
 var bus = new MyAwesomeMessageBus();
 bootstrapWebWorkerCommon(MyApp, bus);
 ```
-In Dart:
+Em Dart:
 ```Dart
-// index.dart, running on the UI side
+// index.dart, executando no lado do IU
 import 'package:angular2/src/web_workers/ui/impl.dart' show bootstrapUICommon;
 import "package:angular2/src/core/reflection/reflection.dart";
 import "package:angular2/src/core/reflection/reflection_capabilities.dart";
@@ -343,7 +287,7 @@ main() {
 }
 ```
 ```Dart
-// background_index.dart, running on the application side
+// background_index.dart, executando no lado da aplicação
 import "package:angular2/src/web_workers/worker/application_common.dart" show bootstrapWebWorkerCommon;
 import "package:angular2/src/core/reflection/reflection.dart";
 import "package:angular2/src/core/reflection/reflection_capabilities.dart";
@@ -355,40 +299,29 @@ main() {
     bootstrapWebWorkerCommon(MyApp, bus);
 }
 ```
-Notice how we call `bootstrapUICommon` instead of `bootstrap` from the UI side. `bootstrap` spans a new WebWorker
-/ Isolate and attaches the default angular MessageBus to it. If you're using a custom MessageBus you are
-responsible for setting up the application side and initiating communication with it. `bootstrapUICommon` assumes
-that the given MessageBus is already set up and can communicate with the application.
-Similarly, we call `bootstrapWebWorkerCommon` instead of `boostrapWebWorker` from the application side. This is
-because `bootstrapWebWorker` assumes you're using the default angular MessageBus and initializes a new one for you.
+
+Note como chamamos `bootstrapUICommon`invés de `bootstrap` do lado da IU. `bootstrap` cria um novo WebWorker / Isolate e anexa o MessageBus padrão do Angular nele. Se você estiver usando um customizado você deve ser o responsável por configurar a aplicação e inicializar a comunicação usando ele. `bootstrapUiCommon` assume que o dado MessageBus já está configurado e pode comunicar com a aplicação. De modo similar, podemos chamar `bootstrapWebWorkerCommon` invés de `bootstrapWebWorker` do lado da aplicação. Isto é porque `bootstrapWebWorker` assume que você está usando o MessageBus padrão e inicializa um novo para você. 
 
 ## MessageBroker
-The MessageBroker is a higher level messaging abstraction that sits on top of the MessageBus. It is used when you
-want to execute code on the other side of a runtime boundary and may want to receive the result.
-There are two types of MessageBrokers. The `ServiceMessageBroker` is used by the side that actually performs
-an operation and may return a result. Conversely, the `ClientMessageBroker` is used by the side that requests that
-an operation be performed and may want to receive the result.
+O MessageBroker é uma abstação de alto nível que ficar acima do MessageBus. É usado quando você quer executar código no outro lado de uma fronteira de tempo de execução e pode querer receber o resultado. 
+Há dois tipos de MessageBrokers. O `ServiceMessageBroker`é usado pelo lado que realmente executa uma operação e pode retornar um resultado. Inversamente, o `ClientMessageBroker` é usado pelo lado que quequisita uma operação para ser executado e pode querer receber o resultado.
 
-### Using the MessageBroker In Your Application
-To use MessageBrokers in your application you must initialize both a `ClientMessageBroker` and a
-`ServiceMessageBroker` on the same channel. You can then register methods with the `ServiceMessageBroker` and
-instruct the `ClientMessageBroker` to run those methods. Below is a lightweight example of using
-MessageBrokers in an application. For a more complete example, check out the `WebWorkerRenderer` and
-`MessageBasedRenderer` inside the Angular WebWorker code.
+### Usando o MessageBroker em sua Aplicação
+Para usar MessageBrokers em sua aplicação você deve inicializar ambos um `ClientMessageBroker` e um `ServiceMessageBroker` em um mesmo canal. Você pode registrar métodos com  o `ServiceMessageBroker`e instruir o `ClientMessageBroker` a executar estes métodos. Abaixo está um exemplo leve do uso de MessageBrokers em uma aplicação. Para um exemplo mais completo, veja o `WebWorkerRenderer`e `MessageBasedRenderer` dentro de um código Angular WebWorker.
 
-#### Using the MessageBroker in TypeScript
+#### Usando o MessageBroker em TypeScript
 ```TypeScript
-// index.ts, which is running on the UI with a method that we want to expose to a WebWorker
+// index.ts, que está rodando na IU com um método que nósqueremos expôr a um WebWorker
 import {bootstrap} from 'angular2/web_worker/ui';
 
 var instance = bootstrap("loader.js");
-var broker = instance.app.createServiceMessageBroker("My Broker Channel");
+var broker = instance.app.createServiceMessageBroker("Meu canal Broker");
 
-// assume we have some function doCoolThings that takes a string argument and returns a Promise<string>
+// assuma que você tenha alguma função chamada doCoolThings que dado uma string retorna uma Promise<string>
 broker.registerMethod("awesomeMethod", [PRIMITIVE], (arg1: string) => doCoolThing(arg1), PRIMITIVE);
 ```
 ```TypeScript
-// background.ts, which is running on a WebWorker and wants to execute a method on the UI
+// background.ts, o qual roda em um WebWorker e quer executar um método na IU
 import {Component, View, ClientMessageBrokerFactory, PRIMITIVE, UiArguments, FnArgs}
 from 'angular2/web_worker/worker';
 
@@ -396,56 +329,51 @@ from 'angular2/web_worker/worker';
 @View(...)
 export class MyComponent {
   constructor(brokerFactory: ClientMessageBrokerFactory) {
-    var broker = brokerFactory.createMessageBroker("My Broker Channel");
+    var broker = brokerFactory.createMessageBroker("Meu canal Broker");
 
     var arguments = [new FnArg(value, PRIMITIVE)];
     var methodInfo = new UiArguments("awesomeMethod", arguments);
     broker.runOnService(methodInfo, PRIMTIVE).then((result: string) => {
-      // result will be equal to the return value of doCoolThing(value) that ran on the UI.
+      // resultado irá ser igual ao valor retornado em doCoolThing(valor) que foi executado na IU.
     });
   }
 }
 ```
-#### Using the MessageBroker in Dart
+#### Usando o MessageBroker em Dart
 ```Dart
-// index.dart, which is running on the UI with a method that we want to expose to a WebWorker
+// index.dart, o qual está rodando na IU com um método que queremos expor em um WebWorker
 import 'package:angular2/web_worker/ui.dart';
 
 main() {
   var instance = bootstrap("background.dart");
-  var broker = instance.app.createServiceMessageBroker("My Broker Channel");
+  var broker = instance.app.createServiceMessageBroker("Meu canal Broker");
 
-  // assume we have some function doCoolThings that takes a String argument and returns a Future<String>
+  // assuma que temo alguma função doCoolThings que tem como argumento de entrada uma String e retona um Future<String>
   broker.registerMethod("awesomeMethod", [PRIMITIVE], (String arg1) => doCoolThing(arg1), PRIMITIVE);
 }
 
 ```
 ```Dart
-// background.dart, which is running on a WebWorker and wants to execute a method on the UI
+// background.dart, o qual está sendo executado em um WebWorker e espera executar um método na IU
 import 'package:angular2/web_worker/worker.dart';
 
 @Component(...)
 @View(...)
 class MyComponent {
   MyComponent(ClientMessageBrokerFactory brokerFactory) {
-    var broker = brokerFactory.createMessageBroker("My Broker Channel");
+    var broker = brokerFactory.createMessageBroker("Meu canal Broker");
 
     var arguments = [new FnArg(value, PRIMITIVE)];
     var methodInfo = new UiArguments("awesomeMethod", arguments);
     broker.runOnService(methodInfo, PRIMTIVE).then((String result) {
-      // result will be equal to the return value of doCoolThing(value) that ran on the UI.
+      // o resultado será igual ao valor retornado de doCoolThin(gvalor) que rodou na IU.
     });
   }
 }
 ```
-Both the client and the service create new MessageBrokers and attach them to the same channel.
-The service then calls `registerMethod` to register the method that it wants to listen to. Register method takes
-four arguments. The first is the name of the method, the second is the Types of that method's parameters, the
-third is the method itself, and the fourth (which is optional) is the return Type of that method.
-The MessageBroker handles serializing / deserializing your parameters and return types using angular's serializer.
-However, at the moment the serializer only knows how to serialize angular classes like those used by the Renderer.
-If you're passing anything other than those types around in your application you can handle serialization yourself
-and then use the `PRIMITIVE` type to tell the MessageBroker to avoid serializing your data.
+Ambos o cliente e o serviço criam novos MessageBrokers e anexam a eles ao mesmo canal. 
+O serviço então chama `registerMethod` para registrar o método que se espera escutar. `registerMethod` possui quatro argumentos O primeiro é o nome do método, o segundo são os tipos(Types) dos parâmetros daquele método, o terceiro é o próprio método, e o quarto (que é opcional) é o tipo de retorno do método. 
+O MessageBroker controla a serialização / deserialização de seus parâmetros e retorna tipos usando o serializador do Angular. Porém, no momento o serializador apenas sabe como serializar classes Angular como aqueles usados por Renderer.
+Se vocÊ passar qualquer outro além daquele tipos em volta da sua aplicação você pode controlar a serialização por você mesmo e então usar o tipo `PRIMITIVE` par dizer ao MessageBroker para prevenir a serialização de seus dados.
 
-The last thing that happens is that the client calls `runOnService` with the name of the method it wants to run,
-a list of that method's arguments and their types, and (optionally) the expected return type.
+A última coisa está acontecendo é o cliente chama `runOnService` com o nome do método que deseja roda, uma lista de argumentos e seus tipos, e (opcionalmente) o tipo de retorno experado.
