@@ -46,7 +46,7 @@ Neste exemplo criamos dois vínculos: um para Car e outro para Engine. `@Inject(
 
 ## Injetor
 
-Um injetor instancia objetos preguiçosamente(ou lazy load), somente quando for chamado, e então faz cache dele.
+Um injetor instancia objetos de forma preguiçosa(ou lazy load), somente quando for chamado, e então faz cache dele.
 
 Compare
 
@@ -125,7 +125,7 @@ class Car {
 }
 ```
 
-Um exemplo mais realista é tendo dois vínculoas que tem de ser providos juntos(Ex.: NgModel e NgRequiredValidator.)
+Um exemplo mais realista é tendo dois vínculos que tem de ser providos juntos(Ex.: NgModel e NgRequiredValidator.)
 
 O decorador `@Host` diz ao Injetor para procurar `Engine` em seu injetor, partente, até alcançar seu hospedeiro(host)(ver próxima seção sobre hospedeiros.)
 
@@ -159,7 +159,7 @@ parent.get(Car); // irá lançar NoProviderError
 
 ## Vínculos
 
-Você mpode vincular uma classe, um valor, ou uma fábrica. É possível criar alias para vínculos existentes.
+Você pode vincular uma classe, um valor, ou um construtor. É possível criar alias para vínculos existentes.
 
 ``` js
 var inj = Injector.resolveAndCreate([
@@ -200,7 +200,7 @@ var inj = Injector.resolveAndCreate([
 ```
 O que implica em `inj.get(Engine) === inj.get("engine!")`.
 
-Note quew tokens e fábricas são desacoplados.
+Note quew tokens e construtores são desacoplados.
 
 ``` js
 bind("some token").toFactory(someFactory);
@@ -243,7 +243,7 @@ Podemos criar um injetor filho para cada nova instância:
 var child = inj.resolveAndCreateChild([MyClass]);
 child.get(MyClass);
 ```
-Ou podemos registror uma função de fábrica:
+Ou podemos registror uma função de construção:
 
 ``` js
 var inj = Injector.resolveAndCreate([

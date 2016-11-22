@@ -6,9 +6,9 @@ Também provê uma descrição detalhada da infraestrutura de mensagens subjacen
 
 ## Introdução 
 
-Suporte a WebWorker em Angular2 foi desenvolvido para ser fácil aumentar a paralelização em sua aplicação Web. 
+O suporte a WebWorker em Angular2 foi desenvolvido para que fosse fácil aumentar a paralelização em sua aplicação Web. 
 Quanto você escolhe executar em um WebWorker Angular executa ambas lógica de aplicação e a maioria do núcleo do framework Angular em um WebWorker.
-Por descarregar o tanto de código quanto possível em um WebWorker mantemos a thread de Interface de Usuário livre para manipular eventos, manipular o DOM, e executar animações. Isto provê uma melhor taxa de quadros e Expreiência de Usuário para aplicações.
+Por descarregar o tanto de código quanto possível em um WebWorker mantemos a thread de Interface de Usuário livre para manipular eventos, manipular o DOM, e executar animações. Isto provê uma melhor taxa de quadros e Experiência de Usuário para aplicações.
 
 ## Inicialização (Bootstrapping) de uma  Aplicação WebWorker
 Inicialização de uma aplicação WebWorker não é muito diferente de uma Inicialização de uma aplicação comum.
