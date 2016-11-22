@@ -1,6 +1,6 @@
 # Incrível Lista de Angular 2
 
-Íncrível Lista de [Angular 2](https://angular.io) para repositórios de para início rápido de projetos, boilerplates, exemplos, tutoriasm módulos, vídeos, e tudo mais sobre o ecosistema do Angular 2
+Incrível Lista de [Angular 2](https://angular.io) para repositórios de para início rápido de projetos, boilerplates, exemplos, tutoriais módulos, vídeos, e tudo mais sobre o ecosistema do Angular 2
 
 ##### Versão atual do Angular 2:
 [![npm version](https://badge.fury.io/js/%40angular%2Fcore.svg)](https://www.npmjs.com/~angular)
@@ -22,7 +22,7 @@ Este é um projeto em construção, contribua com traduções, conteúdo própri
   
 </p>
 
-Tabela de conteúdo:
+# Tabela de conteúdo:
 * [Angular 2](#angular-2)
   * [Fontes oficiais](#official-resources)
   * [Comunidade](#community)
@@ -52,11 +52,11 @@ Tabela de conteúdo:
   * [Abordagem e Explicação](#approach-and-explanation)
   * [Integrações](#integrations)
   * [Componentes](#components)
-  * [Generadores](#generators)
+  * [Geradores](#generators)
   * [TodoMVC](#todomvc)
 * [Universal](#universal-angular-2)
   * [Fontes Gerais](#universal-general-resources)
-  * [Porjetos para início rápido](#universal-seed-projects)
+  * [Projetos para início rápido](#universal-seed-projects)
 * [TypeScript](#angular-2-in-typescript)
   * [Fontes gerais para TypeScript](#typescript-general-resources)
   * [Projetos para início rápido](#typescript-seed-projects)
@@ -111,7 +111,7 @@ Tabela de conteúdo:
 * [/r/Angular2 Subreddit](https://www.reddit.com/r/Angular2/)
 * [Angular Group no Facebook em inglês](https://www.facebook.com/groups/angular2/)
 * [AngularJS no Google+ em inglês](https://plus.google.com/+AngularJS)
-* [Feito em em Angular 2](http://builtwithangular2.com/)
+* [Feito em Angular 2](http://builtwithangular2.com/)
 * [`Canal #ng-2 no Slack` em inglês](https://angularbuddies.slack.com/messages/ng-2/) em AngularBuddies
 
 #### Time Angular no Twitter
@@ -166,7 +166,7 @@ Tabela de conteúdo:
 * [Repositório Angular 2 Universal (GitHub)](https://github.com/angular/universal)
 
 #### Material Design (Em inglês)
-* [Repositório oficil Angular 2 Material Design (GitHub) em inglês](https://github.com/angular/material2)
+* [Repositório oficial Angular 2 Material Design (GitHub) em inglês](https://github.com/angular/material2)
 * [md2](https://www.npmjs.com/package/md2) Componentes, diretivas e serviços em Angular2 baseados no Material Design, como Acordeons, Autocomplementadores, Colapsadores, Paleta de cores, Calendário, Diálogos, Menus, Multiseleções, Switch, Abas, Notificações e Tooltips.
 * [ng2-material](https://www.npmjs.com/package/ng2-material) conjunto de exemploes em material2 e componentes extras(tabela de dados, diálogos, etc) construídos sobre o @angular2-material/core
 * [angular2-mdl](https://www.npmjs.com/package/angular2-mdl) Componentes, diretivas e estilos baseados em Componentes do Material Design Lite
@@ -180,13 +180,13 @@ Tabela de conteúdo:
 
 #### Recursos
 
-##### Annotações
-###### Directivas
+##### Anotações
+###### Diretivas
 Diretivas permitem adicionar comportamentos a elementos no DOM.
 <br>[Leia mais »](features/Annotations.md#directives)
 
 ###### Componentes
-Um componente é uma diretiva do qual utiliza o shadow DOM para criar um encapsulamento de comportamento visual. Componentes são usados para criar elementos gráficos ou separa a aplição em componentes menores
+Um componente é uma diretiva do qual utiliza o shadow DOM para criar um encapsulamento de comportamento visual. Componentes são usados para criar elementos gráficos ou separa a aplicação  em componentes menores
 <br>[Leia mais »](features/Annotations.md#components)
 
 ##### View - Visão
@@ -213,7 +213,7 @@ Suporte do WebWorker em Angular2 foi desenvolvido para facilmente adicionar para
 <br>[Leia mais »](features/WebWorkers.md)
 
 ##### HTTP
-HTTP é disponibilizado como uma classe injetável, com métodos para fazer requisições HTTP. Requisições chamadas retornam um EventEmmitter, o qual, irá emitir uma única Resposta quando uma resposta é recebida.
+HTTP é disponibilizado como uma classe injetável, com métodos para fazer requisições HTTP. Requisições chamadas retornam um EventEmitter, o qual, irá emitir uma única Resposta quando uma resposta é recebida.
 * [Introdução ao HTTP em Angular 2 em inglês](http://www.syntaxsuccess.com/viewarticle/angular-2.0-and-http)
 <br>[Leia mais »](features/HTTP.md)
 
@@ -224,7 +224,7 @@ HTTP é disponibilizado como uma classe injetável, com métodos para fazer requ
 
 ##### Testes
 * [Testando serviços HTTP em Angular 2 com Jasmine em inglês](http://chariotsolutions.com/blog/post/testing-http-services-angular-2-jasmine/)
-* [Testando Componentes UI com TestComponentBuilder em inglês](http://chariotsolutions.com/blog/post/testing-angular-2-components-unit-tests-testcomponentbuilder/)
+* [Testandos componentes UI com TestComponentBuilder em inglês](http://chariotsolutions.com/blog/post/testing-angular-2-components-unit-tests-testcomponentbuilder/)
 [**{{** help_out **}}**](https://github.com/GDGAracaju/incrivel-lista-angular2/edit/gh-pages/README.md)
 <br>[Leia mais »](features/Test.md)
 
@@ -369,7 +369,7 @@ HTTP é disponibilizado como uma classe injetável, com métodos para fazer requ
 * [ng2-bs](https://github.com/pkozlowski-opensource/ng2-bs) Experimentos com diretivas Angular 2 para Bootstrap.
 * [ng-lightning](https://github.com/ng-lightning/ng-lightning) Componentes e diretivas nativas em Angular 2 para sistemas Lightning Design
 * [ag-grid](https://www.ag-grid.com/) DataGrid avançada para JavaScript puro / AngularJS 1 / AngularJS 2 / WebComponents
-* [angular2-grid](https://github.com/BTMorton/angular2-grid) Uma diretiva para uma grid com recursos drap and drop e redimencionamento para Angular 2.
+* [angular2-grid](https://github.com/BTMorton/angular2-grid) Uma diretiva para uma grid com recursos drap and drop e redimensionamento para Angular 2.
 * [angular2-jwt](https://github.com/auth0/angular2-jwt) Biblioteca para enviar Requisições HTTP autenticadas e decodificação JWT
 * [angular2-cookie](https://github.com/salemdar/angular2-cookie) Biblioteca que implementa o serviço Angular 1.X $cokkies em Angular 2
 * [angular2-fontawesome](https://github.com/travelist/angular2-fontawesome) Componentes e Diretivas Angular 2 para Fontawesome
@@ -386,7 +386,7 @@ HTTP é disponibilizado como uma classe injetável, com métodos para fazer requ
 * [ng2-ace](https://github.com/seiyria/ng2-ace) Editor Ace feito para Angular 2
 * [ng2-storage](https://github.com/seiyria/ng2-storage) Um wrapper para localStorage e sessionStorage escrito em proxies ES6 para Angular 2
 * [ng2-fontawesome](https://github.com/seiyria/ng2-fontawesome) Uma pequena diretiva que faz o fontawesome ainda mais fácil de usar.
-* [ng2-sweetalert2](https://github.com/seiyria/ng2-sweetalert2) Um wrapper para sweetalert2 para ser utiolizado em Angular 2
+* [ng2-sweetalert2](https://github.com/seiyria/ng2-sweetalert2) Um wrapper para sweetalert2 para ser utilizado em Angular 2
 * [angular2-text-mask](https://github.com/text-mask/text-mask) Diretiva de entrada de dados com máscara em Angular 2
 * [ng2-fullpage](https://github.com/meiblorn/ng2-fullpage) Scrolling de única página para Angular 2 baseado em fullPage.js
 * [file-droppa](https://github.com/ptkach/fileDroppa) Component simples para drag and drop e upload de arquivos com listagem de arquivos
@@ -396,7 +396,7 @@ HTTP é disponibilizado como uma classe injetável, com métodos para fazer requ
 * [ng2-pdf-viewer](https://github.com/VadimDez/ng2-pdf-viewer) Componente de Visualização de PDF
 * [Covalent](https://teradata.github.io/covalent/) - uma plataforma visual feito em Angular 2 + Material Design
 * [angular2-infinite-scroll](https://www.npmjs.com/package/angular2-infinite-scroll) - Uma diretiva de  Scroll infinito para Angular 2 (baseado em Observables)
-* [ng2-card](https://github.com/c-bata/ng2-card) - Coponente de CardView para angular 2
+* [ng2-card](https://github.com/c-bata/ng2-card) - Componente de CardView para angular 2
 * [Wijmo 5](http://wijmo.com/products/wijmo-5/) - Conjunto de componentes visuais para Angular 2
 * [ng2d3](https://github.com/swimlane/ng2d3) - Framework de renderização nativa de gráficos para Angular 2 com D3 para para utilitários
 * [ng2-swipeable-card](https://github.com/JayKan/ng2-swipeable-card) -  Componente SwipeableCard para Angular2
@@ -440,22 +440,22 @@ TypeScript é um superset JavaScript fortemente tipado que compila para JavaScri
 
 #### Fontes gerais em TypeScript
 * [TypeScript](http://www.typescriptlang.org/) Site oficial para TypeScript
-* [REPL](http://www.typescriptlang.org/play/) TypeScript REPL oficial que executa diretamento do navegador
+* [REPL](http://www.typescriptlang.org/play/) TypeScript REPL oficial que executa diretamente do navegador
 * [Repositório TypeScript (GitHub)](https://github.com/Microsoft/TypeScript) Repositório oficial de  TypeScript no GitHub
 * [Repositório DefinitelyTyped (GitHub)](https://github.com/DefinitelyTyped/DefinitelyTyped) O repositório para definição de tipos de alta qualidade para TypeScript.
 
 
 #### Projetos para início rápido em TypeScript
-* [Pacotede Iniciador Angular 2 Webpack](https://angularclass.github.io/angular2-webpack-starter/) kit de início apresentando Angular 2 (Roteador, HTTP, Formulários, Serviços, Testes, Fim a-Fim), Karma, Protractor, Jasmine, TypeScript, e Webpack por @Angular-Class
+* [Pacote de Iniciador Angular 2 Webpack](https://angularclass.github.io/angular2-webpack-starter/) kit de início apresentando Angular 2 (Roteador, HTTP, Formulários, Serviços, Testes, Fim a-Fim), Karma, Protractor, Jasmine, TypeScript, e Webpack por @Angular-Class
 * [Kit de início Angular 2](https://mgechev.github.io/angular-seed/) Projeto para início rápido em Angular 2
 * [angular2-ts-seed](https://github.com/codewareio/angular2-ts-seed) - Um simples e completo projeto de início rápido para Angular 2 usando TypeScript
-* [ng2-play](https://github.com/pkozlowski-opensource/ng2-play) Um playgroud mínimo em Angular 2 usando TypeScript e carregador SystemJS
+* [ng2-play](https://github.com/pkozlowski-opensource/ng2-play) Um playground mínimo em Angular 2 usando TypeScript e carregador SystemJS
 * [NG2 Lab](https://github.com/rolandjitsu/ng2-lab#awesome-angular2) Um simples projeto montado para Angular 2 usando TypeScript, SystemJS e Firebase que também inclui alguns exemplos de testes unitários  e Integração contínua com Travis e Saucelabs.
 * [Angular2Go](https://github.com/johnpapa/angular2-go#awesome-angular2) Angular 2 Go !
 * [Angular 2 exemplos](https://github.com/thelgevold/angular-2-samples) Exemplos de componentes em Angular 2
 * [Aplicativo TODO com Firebase, OAuth, e Immutablee](https://github.com/r-park/todo-angular2-firebase)
 * [Tutorial Spring Boot e Angular2](https://github.com/springboot-angular2-tutorial/angular2-app) Exemplo prático em Angular2 baseado em [Tutorial Rails](https://www.railstutorial.org/).
-* [Angular 2 Goldilocks](https://github.com/ColinEberhardt/angular2-goldilocks-seed) - Projeto para Angular 2 e TypeScript que não tão simples nem tão complexo. Na verdade sob medida
+* [Angular 2 Goldilocks](https://github.com/ColinEberhardt/angular2-goldilocks-seed) - Projeto para Angular 2 e TypeScript que não tão simples nem tão complexo. Na verdade, sob medida
 * [Iniciador Angular 2](https://github.com/antonybudianto/angular2-starter) - Um simples projeto em Angular 2 para iniciar com fluxo de trabalho Gulp e Travis CI
 * [Iniciador Angular 2 com Leaflet](https://github.com/haoliangyu/angular2-leaflet-starter) - Uma aplicação inicial baseado em Angular e Leaflet
 * [Projeto inicail Angular 2 MapboxGL](https://github.com/haoliangyu/angular2-mapboxgl-starter) - Outra aplicação inicial de mapas baseado em Angular 2 e MapboxGL JS
@@ -466,7 +466,7 @@ TypeScript é um superset JavaScript fortemente tipado que compila para JavaScri
 * [Projeto de início Angular 2 Dashboard](https://github.com/hasanhameed07/angular2-dashboard-starter) - Pronto para ser usado como Dashboard de painel de controle inicial de um projeto baseado em Angular 2 e  tema AdminLTE Bootstrap.
 * [ng2-admin](https://github.com/akveo/ng2-admin) - Framework bonito de painel administrativo baseado em Angular 2, Bootstrap 4 e Webpack
 * [Angular 2 quickstart seed](https://github.com/valor-software/angular2-quickstart)
-* [Cobertura completa de código em Angular 2](https://github.com/danday74/angular2-coverage) - Sólido teste do fluxo de trabalho do Gulp e SystemJS preparado para seu código usando Angular 2 na sua versão final (2.1.0) .. Demonstra testes unitário e combertura completa do código.
+* [Cobertura completa de código em Angular 2](https://github.com/danday74/angular2-coverage) - Sólido teste do fluxo de trabalho do Gulp e SystemJS preparado para seu código usando Angular 2 na sua versão final (2.1.0) .. Demonstra testes unitário e com abertura completa do código.
 * [Angular 2 webpack](https://github.com/michaelbazos/angular2-starter) - Excursão dos Heróis tutorial oficial em TypeScript feito com WebPack
 * [ng2-boiler](https://github.com/amcdnl/ng2-boiler) - Um projeto para iniciar simples com Angular 2, TypeScript e Webpack configurados.
 * [Arcabouço Angular Webpack](https://github.com/antonybudianto/angular-webpack-starter) - Arcabouço Angular Webpack com compilação AoT, Lazy-loading, e Tree-shaking
@@ -499,7 +499,7 @@ Apache Cordova é um popular framework de desenvolvimento de aplicações móvei
 ---
 
 ### Angular 2 em Dart
-> Dart é um linguagem de programação de código aberto e escalável, como ambiente de execução e bibliotecas robustas para desenvolvimento de aplicativos Web, Servidor e Móvel.
+> Dart é uma linguagem de programação de código aberto e escalável, como ambiente de execução e bibliotecas robustas para desenvolvimento de aplicativos Web, Servidor e Móvel.
 
 #### Fontes gerais em Dart
 * [Dart](https://www.dartlang.org/) Site oficial Dart
@@ -513,7 +513,7 @@ Apache Cordova é um popular framework de desenvolvimento de aplicações móvei
 #### Arcabouço de Projetos Dart
 * [Início rápido Angular 2 Dart](https://github.com/andresaraujo/ng2_dart_quickstart) Um mínimo e rápido projeto para iniciar projetos Angular 2 em Dart.
 
-#### Demo e Examplos em Dart
+#### Demo e Exemplos em Dart
 * [Aplicativo Hackernews](https://github.com/andresaraujo/ng2_hackernews) Uma aplicação Hackernews feito com Angular 2 para Dart.
 * [Demo de Routeador](https://github.com/andresaraujo/ng2_dart_router_demo) Um exemplo básico de roteamento do Angular 2.
 * [**{{** adicione_seu_repositório **}}**](https://github.com/GDGAracaju/incrivel-lista-angular2/edit/gh-pages/README.md)
@@ -536,7 +536,7 @@ Apache Cordova é um popular framework de desenvolvimento de aplicações móvei
 ---
 
 ### Angular 2 em Babel
-> O compiladore para a próxima geração de JavaScript
+> O compilador para a próxima geração de JavaScript
 
 #### Fontes gerais de  Babel
 * [Babel](https://babeljs.io/) Página Web Oficial para Babel
@@ -547,14 +547,14 @@ Apache Cordova é um popular framework de desenvolvimento de aplicações móvei
 * [Plunker: Angular 2 + Babel](http://plnkr.co/edit/PxCzCu?p=preview)
 
 #### Arcabouço de projetos Babel
-* [babel-angular2-app](https://github.com/shuhei/babel-angular2-app) Aplicativo esqueto em Angular 2 feito com [Babel](https://babeljs.io/) e [Browserify](http://browserify.org/).
+* [babel-angular2-app](https://github.com/shuhei/babel-angular2-app) Aplicativo esqueleto em Angular 2 feito com [Babel](https://babeljs.io/) e [Browserify](http://browserify.org/).
 * [angular2-fullstack-starter](https://github.com/jgodi/angular2-fullstack-starter) Esqueleto de aplicação de cliente/servidor com Angular 2 feito com Wepack/Babel.
 * [angular2-es6-starter](https://github.com/blacksonic/angular2-babel-esnext-starter) Um aplicativo esqueleto em ES6 e Angular 2 feito em Babel, Webpack e Gulp.
 * [angular2-es-seed](https://github.com/codewareio/angular2-es-seed) Um completo e simples arcabouço para Angular 2 em ES2016.
-* [angular2-babel-quickstart](https://github.com/rbnlffl/angular2-babel-quickstart) Um super simples arcabourço para início rápido com ES6/Babel.
+* [angular2-babel-quickstart](https://github.com/rbnlffl/angular2-babel-quickstart) Um super simples arcabouço para início rápido com ES6/Babel.
 * [**{{** adicione_seu_repositório **}}**](https://github.com/GDGAracaju/incrivel-lista-angular2/edit/gh-pages/README.md)
 
-#### Demo e Examplos com Babel
+#### Demo e Exemplos com Babel
 * [angular2-es6-todomvc](https://github.com/blacksonic/angular2-esnext-todomvc) Implementação em ES6 com Angular 2 e TodoMVC.
 * [ng1-ng2-webpack-lazy-uirouter](https://github.com/swimlane/ng1-ng2-webpack-lazy-uirouter) Lazy-Loading híbrido Angular 1 e 2 usando ui-router, WebPack2 e Babel
 * [**{{** adicione_seu_repositório **}}**](https://github.com/GDGAracaju/incrivel-lista-angular2/edit/gh-pages/README.md)
@@ -564,7 +564,6 @@ Apache Cordova é um popular framework de desenvolvimento de aplicações móvei
 * [babel-plugin-type-assertion](https://github.com/shuhei/babel-plugin-type-assertion) Um plugin transformador babel exprerimental para rtts_assert
 
 #### Angular 2 in NativeScript
-> Build truly native iOS, Android and Windows Phone apps with Javascript and CSS. Try NativeScript open-source framework for cross-platform development.
 > Construa verdadeiros aplicativos nativos para iOS, Android e Windows Phone com JavaScript e CSS. Tente usar em seu próximo projeto o Framework NativeScript de código aberto para desenvolvimento entre várias plataformas.
 
 ##### Fontes gerais para NativeScript
@@ -599,3 +598,5 @@ Apache Cordova é um popular framework de desenvolvimento de aplicações móvei
 
 [![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
 Versão em Português Mantido por @GDGAracaju e voluntários
+
+Original version (english) [awesome-angular2](https://angularclass.github.io/awesome-angular2/)

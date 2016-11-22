@@ -1,7 +1,7 @@
 # HTTP
 -----------------------------------
 
-HTTP é disponibilizado como uma classe injetável, com métodos para executar requisições HTTP. Requisições chamadas retornam um *EventEmitter (Emissor de Evento)* o qual emitirar uma única *Response* quando uma resposta é recebida. 
+HTTP é disponibilizado como uma classe injetável, com métodos para executar requisições HTTP. Requisições chamadas retornam um *EventEmitter (Emissor de Evento)* o qual emitirá uma única *Response* quando uma resposta é recebida. 
 
 O método `toRx()`do *EventEmitter* precisa ser chamado para que se obtenha um objeto RxJS *Subject (Assunto)*. *EventEmitter* não provê combinadores como map, e tem difetentes semânticas para subscrição/observação(subscribing/observing).
 
@@ -26,8 +26,7 @@ class PeopleComponent {
 }
 ```
 
-To use the *EventEmitter* returned by Http, simply pass a generator (See "interface Generator" in the Async Generator spec: https://github.com/jhusain/asyncgenerator) to the observer method of the returned emitter, with optional methods of next, throw, and return.
-
+Para usar o *EventEmitter* retornado pelo HTTP, simplesmente passe um gerador (Veja "Inteface Generator" na especificação de um Gerador Assíncrono (Em inglês): https://github.com/jhusain/asyncgenerator) para o método observador do Emissor retornado, com métodos opcionais de next, throw, e return.
 ``` js
 http.get('people.json').observer({next: (value) => this.people = people});
 ```

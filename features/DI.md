@@ -3,12 +3,12 @@
 
 ## Principais abstrações
 
-A biblioteca é construida sobre as seguintes abistrações: `Injetor`, `Vínculo` e `Dependência`.
+A biblioteca é construída sobre as seguintes abstrações: `Injetor`, `Vínculo` e `Dependência`.
 
  * Um injetor é criado de um conjunto de vínculos.
  * Um injetor resolve dependências e cria objetos.
  * Um vínculo mapeia um token, como uma string ou classe, a uma função de fábrica e uma lista de dependências. Então um vínculo define como é criado um objeto.
- * Uma dependência aponta para um token e contém informações extra em como um objeto correspondente a aquele token deve ser injetado.
+ * Uma dependência aponta para um token e contém mais informações detalhadas em como um objeto correspondente a aquele token deve ser injetado.
 
 ```
 [Injetor]
@@ -93,7 +93,7 @@ InjetorFilho1
 O algoritmo de injeção de dependência funciona como segue abaixo:
 
 ``` js
-// this is pseudocode.
+// isto é um pseudocódigo.
 var inj = this;
 while (inj) {
   if (inj.hasKey(requestedKey)) {
@@ -125,7 +125,7 @@ class Car {
 }
 ```
 
-Um exemplo mais realista é tendo dois vínculoas que tem de ser providos juntos(Ex.: NgModel e NgRequiredValidator.)
+Um exemplo mais realista é tendo dois vínculos que tem de ser providos juntos(Ex.: NgModel e NgRequiredValidator.)
 
 O decorador `@Host` diz ao Injetor para procurar `Engine` em seu injetor, partente, até alcançar seu hospedeiro(host)(ver próxima seção sobre hospedeiros.)
 
@@ -203,9 +203,9 @@ O que implica em `inj.get(Engine) === inj.get("engine!")`.
 Note quew tokens e fábricas são desacoplados.
 
 ``` js
-bind("some token").toFactory(someFactory);
+bind("algum token").toFactory(someFactory);
 ```
-A função `someFactory` não tem que saber quem cria um objeto `some token`.
+A função `someFactory` não tem que saber quem cria um objeto `algum token`.
 
 ### Resolvendo vínculos
 
@@ -227,7 +227,7 @@ inj.createChildFromResolvedBindings(listOfResolvedBindings);
 ```
 
 
-### Dependências TRansientes
+### Dependências Transientes
 
 Um injetor tem apenas uma instância criada para cada vínculo registrado.
 
@@ -252,6 +252,6 @@ var inj = Injector.resolveAndCreate([
 
 var factory = inj.get('MyClassFactory');
 var instance1 = factory(), instance2 = factory();
-// Depends on the implementation of MyClass, but generally holds.
+// Dependente da implementação de MyClass, mas geralmente a propriedade mantém.
 expect(instance1).not.toBe(instance2);
 ```

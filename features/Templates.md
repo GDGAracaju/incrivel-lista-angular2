@@ -1,6 +1,6 @@
 # Templates
 -----------------------------------
-Templetes são marcações o qual é adicionado ao HTML para declarativamente descrever como o modelo de aplicação deve ser projetada para o DOM como também como eventos DOM podem invocar quais métodos no controller. Templates contém sintaxe o qual são o núcleo para o Angular e permite vínculo-de-dados (data-binding), vínculo-de-eventos (event-binding) e, instanciação de templates. 
+Templates são marcações o qual é adicionado ao HTML para declarativamente descrever como o modelo de aplicação deve ser projetada para o DOM como também como eventos DOM podem invocar quais métodos no controller. Templates contém sintaxe o qual são o núcleo para o Angular e permite vínculo-de-dados (data-binding), vínculo-de-eventos (event-binding) e, instanciação de templates. 
 
 O design da sintaxe de templates tem estas propriedades:
 
@@ -14,14 +14,14 @@ Em nenhum ponto é necessário entender qual diretivas estão ativas ou qual sem
 
 ## Vínculos de Propriedades
 
-Vincular dados de modelo de aplicação para a Interface de Usuário é o tipo mais comum de vínculoas em uma aplicação Angular. Os vínculos são sempre na forma de `nome-da-propriedade` o qual é atribuida uma `expressão`. A forma genérica é: 
+Vincular dados de modelo de aplicação para a Interface de Usuário é o tipo mais comum de vínculos em uma aplicação Angular. Os vínculos são sempre na forma de `nome-da-propriedade` o qual é atribuídauma `expressão`. A forma genérica é: 
 
 **Forma curta:** `<algum-elemento [alguma-propriedade]="expressao">`
 
 **Forma canônica:** `<algum-elemento bind-alguma-propriedade="expressao">`
 
 Onde:
-* `algum-elemento`pode ser um elemento DOM existente.
+* `algum-elemento` pode ser um elemento DOM existente.
 * `alguma-propriedade` (escapado por `[]` ou `bind-`) é o nome da propridade em `algum-elemento`. Neste caso o caixa de traço (dash-case) é convetido em camel-case `algumaPropriedade`.
 * `expressao` é uma expressão válida (como vai ser definido na seção abaixo). 
 
@@ -35,16 +35,16 @@ No exemplo acima a propriedade `title` do elemento `div` será atualizado toda v
 Pontos chave:
 
 * O vínculo é a propriedade do elemento e não o atributo do elemento.
-* Para previnir que elementos customizados possam ser lidos como uma `expressão`literal sobre o elemento title, o nome do atributo é escapado. Neste caso o `title` é escapado para `[title]`através da adição de colchetes `[]`.
+* Para prevenir que elementos customizados possam ser lidos como uma `expressão`literal sobre o elemento title, o nome do atributo é escapado. Neste caso o `title` é escapado para `[title]`através da adição de colchetes `[]`.
 * Um valor de um vínculo (neste caso `user.firstName`) irá sempre ser uma expressão, nunca uma string literal.
 
 **NOTA:** Angular 2 vincula propriedades de elementos ao invés de atributos de elementos. Isto é feito para melhor dar suporte a elementos customizados. e permitir vínculos para outros valores além de string.
 
-**NOTA:** Alguns editores/pre-processadores do lado de servidores podem ter problemas para gerar `[]` em torno dos nome de atributos. Por esta razão Angular também suporta a versão canônica que é prefizando `bind-`. 
+**NOTA:** Alguns editores/pre-processadores do lado de servidores podem ter problemas para gerar `[]` em torno dos nome de atributos. Por esta razão Angular também suporta a versão canônica que é prefixando `bind-`. 
 
 ## Vinculando Eventos
 
-Vincular eventos permite ligar eventos vindo do DOM (ou outros components) para o controller Angular.
+Vincular eventos permite ligar eventos vindo do DOM (ou outros componentes) para o controller Angular.
 
 **Forma curta:** `algum-elemento (algum-evento)="declaração">`
 
@@ -64,7 +64,7 @@ Angular escuta por eventos DOM disparados (como no caso de clicar em qualquer fi
 
 **Forma canônica:** `<algum-elemento on-algum-evento="declaração">`
 
-Examplos:
+Exemplos:
 ``` js
 @Component(...)
 class Example {
