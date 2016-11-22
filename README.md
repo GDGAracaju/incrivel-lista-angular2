@@ -2,6 +2,7 @@
 
 Incrível Lista de [Angular 2](https://angular.io) para repositórios de para início rápido de projetos, boilerplates, exemplos, tutoriais módulos, vídeos, e tudo mais sobre o ecosistema do Angular 2
 
+
 ##### Versão atual do Angular 2:
 [![npm version](https://badge.fury.io/js/%40angular%2Fcore.svg)](https://www.npmjs.com/~angular)
 
@@ -13,7 +14,7 @@ Este é um projeto em construção, contribua com traduções, conteúdo própri
 ```
 
 <p align="center">
-  Lista abaixo é somente conteúdo em português mantido por membros do @GDGAracaju e voluntários. Para a lista original com conteúdo em inglês por favor visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)
+  A lista abaixo é somente conteúdo em português mantido por membros do @GDGAracaju e voluntários. Para a lista original com conteúdo em inglês por favor visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)
 
   <br/>
   <br/>
