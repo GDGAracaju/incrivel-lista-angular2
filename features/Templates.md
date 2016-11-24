@@ -1,6 +1,6 @@
 # Templates
 -----------------------------------
-Templetes são marcações o qual é adicionado ao HTML para declarativamente descrever como o modelo de aplicação deve ser projetada para o DOM como também como eventos DOM podem invocar quais métodos no controller. Templates contém sintaxe o qual são o núcleo para o Angular e permite vínculo-de-dados (data-binding), vínculo-de-eventos (event-binding) e, instanciação de templates. 
+Templates são marcações os quais são adicionados ao HTML para descrever de forma declarativa como o modelo de aplicação deve ser projetado para o DOM como também como eventos DOM podem invocar quais métodos no controller. Templates contém sintaxes as quisl são o núcleo para o Angular e permite vínculo-de-dados (data-binding), vínculo-de-eventos (event-binding) e, instanciação de templates. 
 
 O design da sintaxe de templates tem estas propriedades:
 
@@ -10,18 +10,18 @@ O design da sintaxe de templates tem estas propriedades:
 * Todas os lugares de declaração de variáveis são facilmente identificáveis.
 
 As propriedades acima garantem que os templates são facilmente analisados por ferramentas (como IDEs) e raciocinado pelas pessoas.
-Em nenhum ponto é necessário entender qual diretivas estão ativas ou qual semânticas são a fim de raciocinar sobre as características de tempo de execução do template. 
+Em nenhum ponto é necessário entender quais diretivas estão ativas ou quais semânticas estão em ordem para raciocinar sobre as características de tempo de execução do template. 
 
-## Vínculos de Propriedades
+## Vínculos de Propriedade
 
-Vincular dados de modelo de aplicação para a Interface de Usuário é o tipo mais comum de vínculoas em uma aplicação Angular. Os vínculos são sempre na forma de `nome-da-propriedade` o qual é atribuida uma `expressão`. A forma genérica é: 
+Vincular dados de modelo de aplicação para a Interface de Usuário é o tipo mais comum de vínculos em uma aplicação Angular. Os vínculos são sempre na forma de `nome-da-propriedade` o qual é atribuídauma `expressão`. A forma genérica é: 
 
 **Forma curta:** `<algum-elemento [alguma-propriedade]="expressao">`
 
 **Forma canônica:** `<algum-elemento bind-alguma-propriedade="expressao">`
 
 Onde:
-* `algum-elemento`pode ser um elemento DOM existente.
+* `algum-elemento` pode ser um elemento DOM existente.
 * `alguma-propriedade` (escapado por `[]` ou `bind-`) é o nome da propridade em `algum-elemento`. Neste caso o caixa de traço (dash-case) é convetido em camel-case `algumaPropriedade`.
 * `expressao` é uma expressão válida (como vai ser definido na seção abaixo). 
 
@@ -35,16 +35,16 @@ No exemplo acima a propriedade `title` do elemento `div` será atualizado toda v
 Pontos chave:
 
 * O vínculo é a propriedade do elemento e não o atributo do elemento.
-* Para previnir que elementos customizados possam ser lidos como uma `expressão`literal sobre o elemento title, o nome do atributo é escapado. Neste caso o `title` é escapado para `[title]`através da adição de colchetes `[]`.
+* Para prevenir que elementos customizados possam ser lidos como uma `expressão`literal sobre o elemento title, o nome do atributo é escapado. Neste caso o `title` é escapado para `[title]`através da adição de colchetes `[]`.
 * Um valor de um vínculo (neste caso `user.firstName`) irá sempre ser uma expressão, nunca uma string literal.
 
 **NOTA:** Angular 2 vincula propriedades de elementos ao invés de atributos de elementos. Isto é feito para melhor dar suporte a elementos customizados. e permitir vínculos para outros valores além de string.
 
-**NOTA:** Alguns editores/pre-processadores do lado de servidores podem ter problemas para gerar `[]` em torno dos nome de atributos. Por esta razão Angular também suporta a versão canônica que é prefizando `bind-`. 
+**NOTA:** Alguns editores/pre-processadores do lado de servidores podem ter problemas para gerar `[]` em torno dos nome de atributos. Por esta razão Angular também suporta a versão canônica que é prefixando `bind-`. 
 
-## Vinculando Eventos
+## Vinculos de Eventos
 
-Vincular eventos permite ligar eventos vindo do DOM (ou outros components) para o controller Angular.
+Vincular eventos permite ligar eventos vindo do DOM (ou outros componentes) para o controller Angular.
 
 **Forma curta:** `algum-elemento (algum-evento)="declaração">`
 
@@ -64,7 +64,7 @@ Angular escuta por eventos DOM disparados (como no caso de clicar em qualquer fi
 
 **Forma canônica:** `<algum-elemento on-algum-evento="declaração">`
 
-Examplos:
+Exemplos:
 ``` js
 @Component(...)
 class Example {
@@ -133,12 +133,12 @@ Olá {{user}}!
 ```
 
 Onde:
-* `template`define um teplate filho e designa a âncira onde Viewa(instâncias do template) irão ser inseridas. O template pode ser difinido implicitamente com o atributo `template`, que torna o elemento corrente em um template, ou explicitamente com o elemento `<template>`. Declaração explicita é longa, mas permite templates com mais de uma raiz em um nó DOM. 
+* `template`define um teplate filho e designa a âncora onde Views(instâncias do template) irão ser inseridas. O template pode ser definido implicitamente com o atributo `template`, que torna o elemento corrente em um template, ou explicitamente com o elemento `<template>`. Declaração explicita é longa, mas permite templates com mais de uma raiz em um nó DOM. 
 * `viewport` é requerido para templates. A diretiva é responsável por decidir quando e em que ordem as views filhas serão inseridas em sua localização. Tal diretiva usualmente pode ter mais de um vínculo e pode ser representado tanto como `viewport-directive-bindinds` ou `viewport-directive-microsyntax` no elemento ou atributo do `template`. Veja microsintaxe de templates para mais detalhes.
 
 ## Microsintaxe de Template
 
-Frequentemente é necessário codifica uma gama de diferentes vínculos em um template para controlar como a instanciação de template ocorre. Um exemplo é utilizando `ng-for`.
+Frequentemente é necessário codificar uma gama de diferentes vínculos em um template para controlar como a instanciação do template ocorre. Um exemplo é utilizando `ng-for`.
 
 ``` html
 <form #foo=form>

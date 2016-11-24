@@ -2,7 +2,6 @@
 
 ## Adicionando para essa lista
 
-Please ensure your pull request adheres to the following guidelines:
 Por favor, tenha certeza que seu Pull Request adere às seguintes diretrizes:
 
 
@@ -12,14 +11,14 @@ Por favor, tenha certeza que seu Pull Request adere às seguintes diretrizes:
 - Títulos devem ter [Letra maiúscula] na primeira letra de cada palavra exceto artigos, conjunções e preposições. Ex: "Formas de Uso de Diretivas em Angular 2"
 - Usar o seguinte formato: `[Nome da Lista](link)`
 - Adição de links devem ser adicionados logo abaixo de sua categoria relevante.
-- Novas categorias ou melhorias a existente categorização são bem vindas.
+- Novas categorias ou melhorias a existente categorização são bem-vindas.
 - Verifique sua escrita e gramática.
 - Tenha certeza que seu editor esteja configurado para remover espaços iniciais e finais (trailing)
 - Commits e Pull Requeste devem ter um título claro e objetivo.
 
 Agradecemos a sua sugestão!
 
-## Criando sua prórpria lista
+## Criando sua própria lista
 
 Para criar sua própria lista, confira as [instruções](create-list.md).
 
