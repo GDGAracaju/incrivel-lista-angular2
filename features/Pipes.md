@@ -1,6 +1,6 @@
 # Pipes
 -----------------------------------
-Pipes pode ser anexado no final de expressões para traduzir o valor para diversos formatos. Tipicamente usado para controlar a transformação para strings de números, datas, e outros dados, mas também pode ordenar, mapear, e reduzir arrays. Pipes podem ser encadeados. 
+Pipes podem ser anexados no final de expressões para traduzir o valor para diversos formatos. Tipicamente usado para controlar a transformação para strings de números, datas, e outros dados, mas também pode ordenar, mapear, e reduzir arrays. Pipes podem ser encadeados. 
 
 **NOTA:** Pipes são conhecidos com filtros em Angular 1.X.
 

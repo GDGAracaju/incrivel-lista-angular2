@@ -3,11 +3,11 @@
 ## Diretivas
 Diretivas permitem que se adicione comportamento a elementos no DOM.
 
-Diretivas são classes que são instanciadas em resposta a uma estrutura particular DOM. Pelo controle da estrutura DOM, quais diretivas são importadas e seus seletores, o desenvolvedor pode usar o [padrão Composição](https://pt.wikipedia.org/wiki/Composi%C3%A7%C3%A3o_de_objetos) para ter o desejado comportamente na aplicação.
+Diretivas são classes que são instanciadas em resposta a uma estrutura particular DOM. Pelo controle da estrutura DOM, quais diretivas são importadas e seus seletores, o desenvolvedor pode usar o [padrão Composição](https://pt.wikipedia.org/wiki/Composi%C3%A7%C3%A3o_de_objetos) para ter o desejado comportamento na aplicação.
 
 Diretivas são o pilar de uma aplicação em Angular. Nós usamos Diretivas para quebrar problemas complexos em menores para componentes mais reutilizáveis. Diretivas permitem ao desenvolvedor torna HTML em uma [DSL(Linguagens específicas de Domínio)](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico) e então controlar o processo de montagem de aplicação.
 
-Uma diretiva consiste de uma anotação de diretiva e uma classe controladora(controller). Quando o `seletor` da diretiva casa com elements no DOM, os seguintes passos ocorrem:
+Uma diretiva consiste de uma anotação de diretiva e uma classe controladora(controller). Quando o `seletor` da diretiva casa com elementos no DOM, os seguintes passos ocorrem:
 
 * Para cada diretiva, o *ElementInjector* (Injetor de Elementos) tenta resolver os argumentos do construtor da diretiva.
 * Angular instancia diretivas a cada elemento encontrado usando o *ElementInjector* em uma busca de ordem em profundidade, como declarado no HTML
@@ -24,7 +24,7 @@ Aqui há um exemplo trivial de um decorador de um tooltip. A diretiva irá logar
     '(mouseover)': 'show()'  |  - Invoca o método show() toda vez que
   }                          |    o evento mouseover (mouse sobre) é disparado.
 })                           |
-class Form {                 | Classe controladore de diretiva é instanciada,
+class Form {                 | Classe controladora de diretiva é instanciada,
                              | quando CSS é encontrado.
   text:string;               | propriedade de texto no Controller da Diretiva.
                              |
@@ -56,7 +56,7 @@ Um componente é uma diretiva o qual usa shadow DOM para criar comportamentos vi
 * Apenas um componente pode está presente por elemento DOM.
 * Seletores de componentes CSS comumente são disparados pelo nome de seu elemento. (Boas práticas)
 * Componentes tem seu próprio shadow view o qual é adicionado ao elemento como um Shadow DOM.
-* Contextro de Shadow View é a instância de um componente. (Ex.: expressões de templates são avaliados contra a instância do componente.)
+* Contexto de Shadow View é a instância de um componente. (Ex.: expressões de templates são avaliados contra a instância do componente.)
 
 Cada componente Angular requer uma única anotação `@Component` ou pelo menos uma `@View`. A anotação `@Component` especifica quando um componente é instanciado e, quais propriedades e hostListeners ele está vinculado.
 
@@ -73,10 +73,10 @@ Exemplo de um Componente:
   selector: 'pane',               | Seletor CSS sobre o elemento <pane>
   inputs: [                       | Lista qual propriedade precisa ser vinculada
     'title',                      |  - atributo title mapeado para a propriedade title do componente
-    'open'                        |  - atributo open mapeado para a proriedade open do componente
+    'open'                        |  - atributo open mapeado para a propriedade open do componente
   ],                              |
 })                                |
-@View({                           | Annotation Anotação de View
+@View({                           | Anotação de View
   templateUrl: 'pane.html'        |  - URL do template em HTML
 })                                |
 class Pane {                      | Classe controladora de Componente
