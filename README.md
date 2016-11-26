@@ -19,13 +19,10 @@ Este é um projeto em construção, contribua com traduções, conteúdo própri
 
 # Tabela de conteúdo:
 * [Angular 2](#angular-2)
-  * [Fontes oficiais](#official-resources)
-  * [Comunidade](#community)
-  * [Experts no Twitter](#experts-on-twitter)
-  * [Renderização do Lado do Servidor](#server-side-rendering)
-  * [Material Design](#material-design)
-  * [Cheatsheet](#cheatsheet)
-  * [Recursos](#features)
+  * [Fontes oficiais](#fontes-oficiais-em-inglês)
+  * [Comunidade](#comunidade)
+  * [Experts no Twitter](#time-angular-no-twitter)
+  * [Recursos](#recursos)
     * [Annotatções](#annotations)
     * [View - Visão](#view)
     * [Templates](#templates)
@@ -114,11 +111,11 @@ Este é um projeto em construção, contribua com traduções, conteúdo própri
 ##### Anotações
 ###### Diretivas
 Diretivas permitem adicionar comportamentos a elementos no DOM.
-<br>[Leia mais »](features/Annotations.md#directives)
+<br>[Leia mais »](features/Annotations.md#diretivas)
 
 ###### Componentes
 Um componente é uma diretiva do qual utiliza o shadow DOM para criar um encapsulamento de comportamento visual. Componentes são usados para criar elementos gráficos ou separa a aplicação  em componentes menores
-<br>[Leia mais »](features/Annotations.md#components)
+<br>[Leia mais »](features/Annotations.md#componentes)
 
 ##### View - Visão
 Uma View é o núcleo primitivo usado pelo Angular para renderizar a árvore do DOM.
@@ -147,8 +144,6 @@ Suporte do WebWorker em Angular2 foi desenvolvido para facilmente adicionar para
 HTTP é disponibilizado como uma classe injetável, com métodos para fazer requisições HTTP. Requisições chamadas retornam um EventEmitter, o qual, irá emitir uma única Resposta quando uma resposta é recebida.
 * [Introdução ao HTTP em Angular 2 em inglês](http://www.syntaxsuccess.com/viewarticle/angular-2.0-and-http)
 <br>[Leia mais »](features/HTTP.md)
-
-
 
 ## Licença
 
