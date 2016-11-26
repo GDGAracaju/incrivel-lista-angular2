@@ -21,7 +21,7 @@ Este é um projeto em construção, contribua com traduções, conteúdo própri
 * [Angular 2](#angular-2)
   * [Fontes oficiais](#fontes-oficiais-em-inglês)
   * [Comunidade](#comunidade)
-  * [Experts no Twitter](#time-angular-no-twitter)
+  * [Experts no Twitter](#experts-no-twitter-em-inglês)
   * [Recursos](#recursos)
     * [Annotatções](#annotations)
     * [View - Visão](#view)
