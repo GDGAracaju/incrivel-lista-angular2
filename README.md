@@ -22,16 +22,14 @@ This is a curated list of Brazilian Portuguese resources about Angular 2, mantai
   * [Comunidade](#comunidade)
   * [Experts no Twitter](#experts-no-twitter-em-inglês)
   * [Recursos](#recursos)
-    * [Annotatções](#annotations)
-    * [View - Visão](#view)
+    * [Annotações](#anotações)
+    * [View - Visão](#view-visão)
     * [Templates](#templates)
-    * [Detecção de mudanças](#change-detection)
-    * [Injeção de Dependências](#dependency-injection)
+    * [Detecção de mudanças](#detecção-de-mudanças)
+    * [Injeção de Dependências](#injeção-de-dependências)
     * [Pipes](#pipes)
     * [Web Workers](#web-workers)
     * [HTTP](#http)
-    * [Roteador](#router)
-    * [Testes](#test)
 
 ### Angular 2
 > Angular é uma plataforma de desenvolvimento para construção de sistemas móveis, desktop e web.
