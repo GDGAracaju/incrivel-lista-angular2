@@ -23,7 +23,7 @@ This is a curated list of Brazilian Portuguese resources about Angular 2, mantai
   * [Experts no Twitter](#experts-no-twitter-em-inglês)
   * [Recursos](#recursos)
     * [Anotações](#anotações)
-    * [View - Visão](#view-visão)
+    * [View - Visão](#view---visão)
     * [Templates](#templates)
     * [Detecção de mudanças](#detecção-de-mudanças)
     * [Injeção de Dependências](#injeção-de-dependências)
