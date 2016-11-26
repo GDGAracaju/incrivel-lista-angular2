@@ -12,10 +12,9 @@ Incrível Lista de [Angular 2](https://angular.io) para repositórios de para in
 Este é um projeto em construção, contribua com traduções, conteúdo próprio entre outros. Toda ajuda é bem-vinda!
 ```
 
-`A lista abaixo é somente conteúdo em português mantido por membros do @GDGAracaju e voluntários. Para a lista original com conteúdo em inglês por favor visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)`
+A lista abaixo é somente conteúdo em português mantido por membros do @GDGAracaju e voluntários. Para a lista original com conteúdo em inglês por favor visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)
 
-
-`This is a curated list of Brazilian Portuguese resources about Angular 2, mantained by members of @GDGAracaju and voluntees. For original english content, please visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)`
+This is a curated list of Brazilian Portuguese resources about Angular 2, mantained by members of @GDGAracaju and voluntees. For original english content, please visite: [awesome-angular2](https://angularclass.github.io/awesome-angular2/)
 
 # Tabela de conteúdo:
 * [Angular 2](#angular-2)
