@@ -30,6 +30,12 @@ This is a curated list of Brazilian Portuguese resources about Angular 2, mantai
     * [Pipes](#pipes)
     * [Web Workers](#web-workers)
     * [HTTP](#http)
+  * [Vídeos](#vídeos)
+  * [Tutoriais](#tutoriais)
+  * [Artigos](#artigos)
+* [TypeScript](#typescript)
+  * [Tutoriais](#tutoriais)
+  * [Artigos](#artigos)
 
 ### Angular 2
 > Angular é uma plataforma de desenvolvimento para construção de sistemas móveis, desktop e web.
@@ -102,6 +108,53 @@ This is a curated list of Brazilian Portuguese resources about Angular 2, mantai
 * [Deborah Kurata](https://twitter.com/deborahkurata)
 * [Minko Gechev](https://twitter.com/mgechev)
 * [**{{** adicionar_experts **}}**](https://github.com/GDGAracaju/incrivel-lista-angular2/edit/gh-pages/README.md)
+
+##### Vídeos
+
+[Curso de Angular2 pela loinane.training(gratuito)](http://loiane.training/curso/angular-2/)
+
+##### Tutoriais
+
+[Curso Básico de Angular 2](http://kazale.com/curso-basico-angular-2/)
+[Porquê Angular 2](http://aprendaangular2.online/why-angular2) 
+[Criando uma Aplicação Móvel com Ionic2 e Angular 2 em 10 Passos](http://tableless.com.br/criando-uma-aplicacao-movel-com-ionic-2-e-angular-2-em-dez-passos/)
+[Curso Angular 2 gratuito](https://github.com/loiane/curso-angular2)
+[Começando com Angular 2](http://viladosilicio.com.br/comecando-com-angular-2/)
+[Usando Services e HTTP em Angular 2](http://clubedosgeeks.com.br/programacao/angularjs/angular2-http-services)
+[Iniciando com Angular 2](http://clubedosgeeks.com.br/programacao/angularjs/iniciando-com-angular-2)
+
+##### Artigos
+[Adeus AngularJS, Olá Angular 2](http://blog.werlangtecnologia.com.br/angular/adeus-angularjs-ola-angular2/)
+[Angular 2: o Fim do Two-Way Data Binding?](http://blog.caelum.com.br/angular-2-o-fim-do-two-way-data-binding/)
+[Angular 2 é Realmente Uma cilada?](http://andrebaltieri.net/blog/angular-2-e-realmente-uma-cilada/)
+[Porque o Angular 2 vai bombar](http://felipe.smallorange.co/porque-o-angular-2-vai-bombar/)
+
+#### TypeScript
+
+TypeScript é um superset do JavaScript feito pela Microsoft e do qual é linguagem base para escrever aplicações em Angular 2.
+
+##### Tutoriais
+
+[Diga Olá ao TypeScript e Adeus ao JavaScript](http://tableless.com.br/diga-ola-ao-typescript-e-adeus-ao-javascript/)
+[Crie Aplicações JavaScript com TypeScript no Visual Studio Code](https://talkitbr.com/2016/02/26/crie-aplicacoes-javascript-com-typescript-no-visual-studio-code/)
+[TypeScript, Ame ou nem Ligue](http://clubedosgeeks.com.br/programacao/javascript/typescript-ame-ou-nem-ligue)
+[TypeScript - Orientado a Objetos](http://clubedosgeeks.com.br/programacao/javascript/typescript-orientado-objetos)
+[TypeScript - Executando no Browser com SystemJS](http://clubedosgeeks.com.br/programacao/javascript/typescript-executando-com-systemjs) 
+[Criando JavaScript Vitaminado com TypeScript](http://www.crazytechguys.com/2012/10/05/criando-javascript-vitaminado-com-typescript/)
+[TypeScript = Escrevendo JavaScript tipado](http://alexhiroshi.com.br/typescript-escrevendo-javascript-tipado/)
+
+##### Artigos
+
+[.NET - O que é TypeScript e quais os seus Benefícios?](http://imasters.com.br/framework/dotnet/net-o-que-e-typescript-e-quais-os-seus-beneficios)
+[TypeScript - O Superset de JavaScript](http://www.eduardopires.net.br/2012/10/typescript/)
+[Compreendendo o TypeScript](https://msdn.microsoft.com/pt-br/magazine/Dn890374.aspx)
+[TypeScript 2.0: O que Está por Vir](https://www.infoq.com/br/news/2016/05/typescript-2-preview)
+[TypeScript: Uma Solução mais Simples e Organizada de Escrever e Compilar JavaScript](http://www.tocadigital.com.br/2016/10/typescript-uma-solucao-mais-simples-e-organizada-de-escrever-e-compilar-javascript/)
+[TypeScript: Porque Você Deveria Aprender?](http://www.tocadigital.com.br/2016/10/typescript-uma-solucao-mais-simples-e-organizada-de-escrever-e-compilar-javascript/)
+
+##### Vídeos
+
+[Microsoft Virtual Academy - Introdução ao NodeJS com TypeScript no Visual Studio Code](https://mva.microsoft.com/pt-br/training-courses/introdu-o-ao-nodejs-com-typescript-no-visual-studio-code-15851)
 
 #### Recursos
 
