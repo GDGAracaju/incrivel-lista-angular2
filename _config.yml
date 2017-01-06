@@ -16,7 +16,7 @@
 title: Incrivel-lista-angular2 by GDG Aracaju
 email: your-email@domain.com
 description: > # Incrível Lista de Angular 2 para repositórios de para início rápido de projetos, boilerplates, exemplos, tutoriais módulos, vídeos, e tudo mais sobre o ecosistema do Angular 2
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/incrivel-lista-angular2" # the subpath of your site, e.g. /blog
 url: "https://gdgaracaju.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: GDGAracaju
 github_username:  GDGAracaju
