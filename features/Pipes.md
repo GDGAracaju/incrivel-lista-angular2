@@ -9,14 +9,14 @@ A sintaxe de Pipes é:
 ``` javascript
 <div class="movie-copy">
   <p>
-    \{\{ model.getValue('copy') | async | uppercase \}\}
+    {% raw %} {{ model.getValue('copy') | async | uppercase }} {% endraw %}
   </p>
   <ul>
     <li>
-      <b>Estrelando</b>: \{\{ model.getValue('starring') | async \}\}
+      <b>Estrelando</b>: {% raw %} {{ model.getValue('starring') | async }} {% endraw %}
     </li>
     <li>
-      <b>Gêneros</b>: \{\{ model.getValue('genres') | async \}\}
+      <b>Gêneros</b>: {% raw %} {{ model.getValue('genres') | async }} {% endraw %}
     </li>
   <ul>
 </div>
