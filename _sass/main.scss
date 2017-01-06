@@ -196,7 +196,11 @@ img.article-image {
 	}
 }
 
-footer {
-	background-image: url(images/footer-background.png);
-	background-size: cover;
+.mdl-mini-footer {
+	.mdl-logo {
+		line-height: 1;
+	}
+	.mdl-mini-footer__link-list {
+		line-height: 1;
+	}
 }
