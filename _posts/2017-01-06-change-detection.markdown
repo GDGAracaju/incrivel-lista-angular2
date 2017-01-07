@@ -12,7 +12,7 @@ Se um componente depender somente de seus vínculos, e seus vínculos são imut�
 
 Para implementar isto basta configurar a estratégia de detecção de mudança para `ON_PUSH`
 
-``` javascript
+```javascript
 @Component({changeDetection:ON_PUSH})
 class ImmutableTodoCmp {
   todo:Todo;
@@ -24,7 +24,7 @@ Se o componente depende apenas de seus vínculos, e os vínculos são observáve
 
 **NOTA:** Se você tem uma árvore de componentes com vínculos imutáveis, uma mudança tem que passar por todos os componentes desde a raiz. Este não é o caso quando tratamos com observáveis
 
-``` javascript
+```javascript
 type ObservableTodo = Observable<Todo>;
 type ObservableTodos = Observable<Array<ObservableTodo>>;
 
@@ -35,11 +35,11 @@ class ObservableTodosCmp {
 }
 ```
 
-``` javascript
+```javascript
 <todo *ng-for=”var t of todos” todo=”t”></todo>
 ```
 
-``` javascript
+```javascript
 @Component({selector:'todo'})
 class ObservableTodoCmp {
   todo:ObservableTodo;
