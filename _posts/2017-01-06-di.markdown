@@ -26,7 +26,7 @@ A biblioteca é construída sobre as seguintes abstrações: `Injetor`, `Víncul
 
 ## Exemplo
 
-``` javascript
+```javascript
 class Engine {
 }
 
@@ -50,20 +50,20 @@ Um injetor instancia objetos de forma preguiçosa(ou lazy load), somente quando 
 
 Compare
 
-``` javascript
+```javascript
 var car = inj.get(Car); //instancia ambos Car e Engine
 ```
 
 com
 
-``` javascript
+```javascript
 var engine = inj.get(Engine); //Instancia Engine
 var car = inj.get(Car); //Instancia um Car (reusa Engine)
 ```
 
 e com
 
-``` javascript
+```javascript
 var car = inj.get(Car); //instancia ambos Engine e Car
 var engine = inj.get(Engine); //lê Engine do cache
 ```
@@ -73,7 +73,7 @@ Para evitar bugs, tenha certeza que os objetos registrados tenham construtores l
 
 Injetores são hierárquicos.
 
-``` js
+```javascript
 var parent = Injector.resolveAndCreate([
   bind(Engine).toClass(TurboEngine)
 ]);
@@ -92,7 +92,7 @@ InjetorFilho1
 ```
 O algoritmo de injeção de dependência funciona como segue abaixo:
 
-``` js
+```javascript
 // isto é um pseudocódigo.
 var inj = this;
 while (inj) {
@@ -107,7 +107,7 @@ throw new NoProviderError(requestedKey);
 
 Então no exemplo seguinte:
 
-``` js
+```javascript
 class Car {
   constructor(e: Engine){}
 }
@@ -119,7 +119,7 @@ Injetor de Dependências começa resolvendo `Engine` com o mesmo injetor que o v
 
 Você pode colocar restrições superior e inferior a uma dependência. Por exemplo, o decorador `@Self` diz ao Injetor de Dependência para procurar por `Engine` somente no mesmo injetor onde `Car` foi definido. Então não irá passar por toda a árvore.
 
-``` js
+```javascript
 class Car {
   constructor(@Self() e: Engine){}
 }
@@ -129,7 +129,7 @@ Um exemplo mais realista é tendo dois vínculos que tem de ser providos juntos(
 
 O decorador `@Host` diz ao Injetor para procurar `Engine` em seu injetor, partente, até alcançar seu hospedeiro(host)(ver próxima seção sobre hospedeiros.)
 
-``` js
+```javascript
 class Car {
   constructor(@Host() e: Engine){}
 }
@@ -137,7 +137,7 @@ class Car {
 
 O decorador `@SkipSelf` diz ao Injetor para procurar por `Engine` em toda a árvore começando pelo pai do injetor.
 
-``` js
+```javascript
 class Car {
   constructor(@SkipSelf() e: Engine){}
 }
@@ -147,7 +147,7 @@ class Car {
 
 A resolução de dependências somente navega para cima sua árvore. O exemplo a seguir irá lançar exceção pois o Injetor irá procurar uma instância de `Engine` começando do `pai`.
 
-``` js
+```javascript
 var parent = Injector.resolveAndCreate([Car]);
 var child = parent.resolveAndCreateChild([
   bind(Engine).toClass(TurboEngine)
@@ -161,7 +161,7 @@ parent.get(Car); // irá lançar NoProviderError
 
 Você pode vincular uma classe, um valor, ou um método de fábrica. É possível criar alias para vínculos existentes.
 
-``` js
+```javascript
 var inj = Injector.resolveAndCreate([
   bind(Car).toClass(Car),
   bind(Engine).toClass(Engine)
@@ -184,7 +184,7 @@ var inj = Injector.resolveAndCreate([
 
 Você pode vincular qualquer token.
 
-``` js
+```javascript
 var inj = Injector.resolveAndCreate([
   bind(Car).toFactory((e) => new Car(), ["engine!"]),
   bind("engine!").toClass(Engine)
@@ -192,7 +192,7 @@ var inj = Injector.resolveAndCreate([
 ```
 Se quiser criar um alias para um vínculo existente, você pode usar `toAlias`:
 
-``` js
+```javascript
 var inj = Injector.resolveAndCreate([
   bind(Engine).toClass(Engine),
   bind("engine!").toAlias(Engine)
@@ -202,7 +202,7 @@ O que implica em `inj.get(Engine) === inj.get("engine!")`.
 
 Note quew tokens e métodos de fábrica são desacoplados.
 
-``` js
+```javascript
 bind("algum token").toFactory(someFactory);
 ```
 A função `someFactory` não tem que saber quem cria um objeto `algum token`.
@@ -220,7 +220,7 @@ As funções  `resolveAndCreate` e `resolveAndCreateChild` resolve os vínculos 
 
 Você pode criar um injetor usando uma lista de vínculos resolvidos.
 
-``` js
+```javascript
 var listOfResolvingBindings = Injector.resolve([Binding1, Binding2]);
 var inj = Injector.fromResolvedBindings(listOfResolvingBindings);
 inj.createChildFromResolvedBindings(listOfResolvedBindings);
@@ -231,7 +231,7 @@ inj.createChildFromResolvedBindings(listOfResolvedBindings);
 
 Um injetor tem apenas uma instância criada para cada vínculo registrado.
 
-``` js
+```javascript
 inj.get(MyClass) === inj.get(MyClass); //always holds
 ```
 
@@ -239,13 +239,13 @@ Se precisarmos de dependências transientes, alguma coisa que queremos uma nova 
 
 Podemos criar um injetor filho para cada nova instância:
 
-``` js
+```javascript
 var child = inj.resolveAndCreateChild([MyClass]);
 child.get(MyClass);
 ```
 Ou podemos registror uma função de construção:
 
-``` js
+```javascript
 var inj = Injector.resolveAndCreate([
   bind('MyClassFactory').toFactory(dep => () => new MyClass(dep), [SomeDependency])
 ]);
