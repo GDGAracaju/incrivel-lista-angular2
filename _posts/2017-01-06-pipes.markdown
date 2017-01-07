@@ -6,7 +6,7 @@ Pipes podem ser anexados no final de expressões para traduzir o valor para dive
 
 A sintaxe de Pipes é:
 
-``` javascript
+```javascript
 <div class="movie-copy">
   <p>
     {% raw %} {{ model.getValue('copy') | async | uppercase }} {% endraw %}
