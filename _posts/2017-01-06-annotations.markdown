@@ -14,7 +14,7 @@ Uma diretiva consiste de uma anotação de diretiva e uma classe controladora(co
 
 Aqui há um exemplo trivial de um decorador de um tooltip. A diretiva irá logar no console toda vez que um mouse passar na região de um tooltip:
 
-``` javascript
+```javascript
 @Directive({
   selector: '[tooltip]',     | O seletor CSS que dispara o decorador
   inputs: [                  | Lista quais propriedades precisam ser vinculados
@@ -36,7 +36,7 @@ class Form {                 | Classe controladora de diretiva é instanciada,
 
 Exemplo de uso:
 
-``` html
+```html
 <span tooltip="Texto do Tooltip.">Algum texto aqui.</span>
 ```
 O desenvolvedor de uma aplicação agora pode usar livremente o atributo `tooltip` em qualquer lugar que este comportamento for necessário.
@@ -44,7 +44,7 @@ O código acima ensina o navegador um novo comportamento reutilizável e declara
 
 Note que o vínculo dos dados irá funcionar com este decorador sem mais nenhum esforço com é mostrado abaixo.
 
-``` html
+```html
 <span tooltip="Olá {{usuario}}!">Algum texto aqui.</span>
 ```
 
@@ -68,7 +68,7 @@ Quando um componente é instanciado, Angular
 
 Exemplo de um Componente:
 
-``` javascript
+```javascript
 @Component({                      | Anotação de Componente
   selector: 'pane',               | Seletor CSS sobre o elemento <pane>
   inputs: [                       | Lista qual propriedade precisa ser vinculada
@@ -96,7 +96,7 @@ class Pane {                      | Classe controladora de Componente
 ```
 
 `pane.html`:
-``` html
+```html
 <div class="outer">
   <h1>{{title}}</h1>
   <div class="inner" [hidden]="!open">
@@ -112,7 +112,7 @@ class Pane {                      | Classe controladora de Componente
 ```
 
 Example of usage:
-``` html
+```html
 <pane #pane title="Example Title" open="true">
   Some text to wrap.
 </pane>
