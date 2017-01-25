@@ -1,6 +1,4 @@
-# View (visões)
------------------------------------
-## Visão Geral
+## View (visões)
 
 Uma View é uma base primitiva usada pelo angular para rederizar uma árvore DOM. 
 Uma ViewContainer(Conteiner de Visões) é um local na View o qual aceita Views filhas.
@@ -15,13 +13,13 @@ Views formam uma estrutura de uma árvore que imita um ávore DOM.
 * View contém um ChangeDetector (Detector de mudanças) para busca por mudanças detectadas no modelo.
 * Views contém ElementInjector(Injetor de Elementos) para criação de Diretivas.
 
-## View Simples
+#### View Simples
 
 Vamos examinar uma View simples e todas suas partes em detalhes.
 
 Assuma o seguinte Componente:
 
-``` javascript
+```javascript
 class Greeter {
   greeting:string;
 
@@ -30,30 +28,32 @@ class Greeter {
   }
 }
 ```
-E assuma a seguinte View HTML:
 
-``` html
+#### E assuma a seguinte View HTML:
+
+```html
 <div>
   Seu nome:
   <input var="name" type="Text">
   <br>
-  {{greeting}} {{name.value}}!
+  {% raw %}{{greeting}} {{name.value}}!{% endraw %}
 </div>
 ```
 
 O template acima é compilado pelo Compilador para criar uma ProtoView. A ProtoView é então usada para criar instâncias da View. O processo de instanciação envolve a clonagem do template acima e localizar todos os elementos que contenham vínculos e finalmente é instanciado as Diretivas associadas ao template. (Veja a seção de Compilação para mais detalhes.)
 
-``` html
+```html
 <div>                             | viewA(greeter)
   Your name:                      | viewA(greeter)
   <input var="name" type="Text">  | viewA(greeter): variável local 'name'
   <br>                            | viewA(greeter)
-  {{greeting}} {{name.value}}!    | viewA(greeter): expressão de vínculo 'greeting' & 'name.value'
+  {% raw %}{{greeting}} {{name.value}}!{% endraw %}   | viewA(greeter): expressão de vínculo 'greeting' & 'name.value'
 </div>                            | viewA(greeter)
 ```
 
 A instância resultante da View é algo semelhante a isso (pseudocódigo simplificado):
-``` javascript
+
+```javascript
 viewA = new View({
   template: ...,
   context: new Greeter(),
@@ -70,27 +70,26 @@ Nota:
 * Todos os elementos DOM são pertencentes por uma única instância da View.
 * A estrutura da DOM pode não mudar durante o tempo de execução. Para permitir mudanças estruturais no DOM necessitamos entender Views Compostas.
 
-## View Compostas
+#### View Compostas
 
 Uma importante parte da aplicação é permitir mudanças na estrutura do DOM para renderizar os dados para o usuário. Em Angular isto é feito pela inserção de View filhas em um ViewContainer.
 
 Vamos começas com uma View como a seguinte:
 
-``` html
+```html
 <ul>
-  <li template="ng-for: #person of people">{{person}}</li>
+  <li template="ng-for: #person of people">{% raw %}{{person}}{% endraw %}</li>
 </ul>
 ```
 
 Durante o processo de compilação o Compilador quebra o template HTML em estas duas ProtoViews:
 
-``` html
-  <li>{{person}}</li>   | protoViewB(Locals)
+```html
+  <li>{% raw %}{{person}}{% endraw %}</li>   | protoViewB(Locals)
 ```
+e
 
-and
-
-``` html
+```html
 <ul>                    | protoViewA(someContext)
   <template></template> | protoViewA(someContext): protoViewB
 </ul>                   | protoViewA(someContext)
@@ -100,7 +99,7 @@ O próximo passo é compor estas PropoViews em um View de fato oqual é rederiza
 
 *Passo 1:* Instancia-se `viewA`
 
-``` html
+```html
 <ul>                    | viewA(someContext)
   <template></template> | viewA(someContext): new NgFor(new ViewContainer(protoViewB))
 </ul>                   | viewA(someContext)
@@ -112,16 +111,17 @@ O próximo passo é compor estas PropoViews em um View de fato oqual é rederiza
 
 Note que
 
-``` html
+```html
 <ul>                    | viewA(someContext)
   <template></template> | viewA(someContext): new NgFor(new ViewContainer(protoViewB))
-  <li>{{person}}</li>   | viewB0(locals0(someContext))
-  <li>{{person}}</li>   | viewB1(locals0(someContext))
+  <li>{% raw %}{{person}}{% endraw %}</li>   | viewB0(locals0(someContext))
+  <li>{% raw %}{{person}}{% endraw %}</li>   | viewB1(locals0(someContext))
 </ul>                   | viewA(someContext)
 ```
 
 *Passo 4:* Todos os vínculkos nas Views filhas são atualizadas. Note que no caso de `NgFor` a avaliação contextual para a `viewB0` e `viewB1` são `locals0` e `locals1` respectivamente. Locals permite a introdição de variáveis locais visíveis apenas dentro do escopo da View, e delega cada referência desconhecida para o contexto pai.
-``` html
+
+```html
 <ul>                    | viewA
   <template></template> | viewA: new NgFor(new ViewContainer(protoViewB))
   <li>Alice</li>        | viewB0
@@ -131,11 +131,11 @@ Note que
 
 Cada View pode ter entre zero ou mais ViewContainers. Pela inserção ou remoção de View filhas para e de um ViewContainers, a aplicação pode  mudar a estrutura DOM em qualquer estado desejado. Uma View pode conter nós individuais ou complexas estruturas DOM. A inserção de pontos para View filhas, conhecido como ViewContainers, contém um elemento DOM o qual age como uma âncora. A âncora pode ser tanto um `template` quanto um elemento script dependendo do seu browser; Isto é usado para identificar onde as Views filhas irá ser inseridas. 
 
-## Componente de Views
+#### Componente de Views
 
 Uma View pode ter também conter Componentes. Componentes contém Shadow DOM para encapsulamento de seu estado interno de renderização. Ao contrário aos ViewContainers que podem ter zero ou mais Views, o Componente sempre terá exatamente um único Shadow View.
 
-``` html
+```html
 <div>                            | viewA
   <my-component>                 | viewA
     #SHADOW_ROOT                 | (fronteira de encapsulamento)
@@ -146,7 +146,7 @@ Uma View pode ter também conter Componentes. Componentes contém Shadow DOM par
 </div>                           | viewA
 ```
 
-## Contexto de Avaliação
+#### Contexto de Avaliação
 
 Cada View age como um contexto para avaliação de suas expressões. Há dois tipos de contextos: 
 
@@ -155,7 +155,7 @@ Cada View age como um contexto para avaliação de suas expressões. Há dois ti
 
 Vamos assumir o seguinte componente:
 
-``` javascript
+```javascript
 class Greeter {
   greeting:string;
 
@@ -167,18 +167,18 @@ class Greeter {
 
 E assumir a seguinte View HTML:
 
-``` html
+```html
 <div>                             | viewA(greeter)
   Your name:                      | viewA(greeter)
   <input var="name" type="Text">  | viewA(greeter)
   <br>                            | viewA(greeter)
-  {{greeting}} {{name.value}}!    | viewA(greeter)
+  {% raw %}{{greeting}} {{name.value}}!{% endraw %}    | viewA(greeter)
 </div>                            | viewA(greeter)
 ```
 
 A Interface do Usuário é construída usando uma única View, e consequentemente um único contexto para `gretter`. Isto pode ser expressado em pseudo-código:
 
-``` javascript
+```javascript
 var greeter = new Greeter();
 ```
 
@@ -187,13 +187,13 @@ A View contém dois vínculos:
 1. `gretting`: limita a propriedade `greeting` na instância `Greeter`.
 2. `name.value`: isto põe um problema. Não há propriedade `name` na instância `Greeter`. Para resolver nós envolver a instância Greeter em uma instância `Local` como abaixo:
 
-``` javascript
+```javascript
 var greeter = new Locals(new Greeter(), {name: referência_ao_elemento_de_entrada })
 ```
 
 Por envolvermos a instância de `Greeter` em `Locals` permitimos que a View introduza variáveis as quais são adicionadas a instância de `Greeter`. Durante a resolução das expressões primeiramente checamos o Locals, e somente então a instância de `Greeter`.
 
-## Ciclo de Vida da View (Hidratação e Desidratração)
+#### Ciclo de Vida da View (Hidratação e Desidratração)
 
 Transição de View através de um particular conjunto de estados:
 

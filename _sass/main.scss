@@ -210,3 +210,12 @@ img.article-image {
 		max-width: 100%;
 	}
 }
+
+.highlighter-rouge {
+	width: 100%;
+	overflow-x: scroll;
+	background: #f7f7f7;
+	border-radius: 5px;
+	-webkit-box-shadow: 2px 3px 2px 0 rgba(0,0,0,0.1);
+	box-shadow: 2px 3px 2px 0 rgba(0,0,0,0.1);
+}

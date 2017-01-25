@@ -1,11 +1,10 @@
-# HTTP
------------------------------------
+## HTTP
 
 HTTP é disponibilizado como uma classe injetável, com métodos para executar requisições HTTP. Requisições chamadas retornam um *EventEmitter (Emissor de Evento)* o qual emitirá uma única *Response* quando uma resposta é recebida. 
 
 O método `toRx()`do *EventEmitter* precisa ser chamado para que se obtenha um objeto RxJS *Subject (Assunto)*. *EventEmitter* não provê combinadores como map, e tem difetentes semânticas para subscrição/observação(subscribing/observing).
 
-## Uso
+#### Uso
 
 ```TypeScript
 import {Http, HTTP_BINDINGS} from 'angular2/http';

@@ -31,13 +31,13 @@ class Engine {
 }
 
 class Car {
-	constructor(@Inject(Engine) engine) {
-	}
+  constructor(@Inject(Engine) engine) {
+  }
 }
 
 var inj = Injector.resolveAndCreate([
-	bind(Car).toClass(Car),
-	bind(Engine).toClass(Engine)
+  bind(Car).toClass(Car),
+  bind(Engine).toClass(Engine)
 ]);
 var car = inj.get(Car);
 ```
@@ -243,6 +243,7 @@ Podemos criar um injetor filho para cada nova instância:
 var child = inj.resolveAndCreateChild([MyClass]);
 child.get(MyClass);
 ```
+
 Ou podemos registror uma função de construção:
 
 ```javascript
