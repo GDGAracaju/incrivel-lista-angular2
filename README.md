@@ -74,7 +74,7 @@ This is a curated list of Brazilian Portuguese resources about Angular 2, mantai
 * [@robwormald](https://twitter.com/robwormald)
 
 #### Experts no Twitter (Em inglês)
-> List of Angular experts you should follow on Twitter (in no particular order). This list is by no means complete.
+> Lista de experts em Angular que você deve seguir no Tweeter (em nenhuma ordem particular). Esta lista de forma alguma está completa.
 
 * [@gdi2290](https://twitter.com/gdi2290)
 * [@scotups](https://twitter.com/scotups)

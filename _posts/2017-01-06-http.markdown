@@ -7,7 +7,7 @@ O método `toRx()`do *EventEmitter* precisa ser chamado para que se obtenha um o
 
 ## Uso
 
-``` TypeScript
+```TypeScript
 import {Http, HTTP_BINDINGS} from 'angular2/http';
 
 @Component({selector: 'http-app', viewBindings: [HTTP_BINDINGS]})
@@ -28,13 +28,13 @@ class PeopleComponent {
 
 Para usar o *EventEmitter* retornado via http, simplesmente passe um gerador (Veja "Gerador de Interface na especificação do Async Generator: https://github.com/jhusain/asyncgenerator") ´para o método observador que o emissor retornou, com métodos opcionais de próximo, lançamento e retorno.
 
-``` js
+```javascript
 http.get('people.json').observer({next: (value) => this.people = people});
 ```
 
 O construção padrão para realizar requisições, *XMLHttpRequest*, é abstraído como "Backend" (XHRBackend no caso), o qual pode ser simulado (mocked) através de injeção de dependências pela substituição do vínculo XHRBackend, como segue o seguinte exemplo:
 
-``` TypeScript
+```TypeScript
 import {MockBackend, BaseRequestOptions, Http} from 'angular2/http';
 
 var injector = Injector.resolveAndCreate([
